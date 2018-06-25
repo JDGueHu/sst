@@ -1,0 +1,164 @@
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 210px;
+    max-width: 210px;
+    background: white;
+    transition: all 0.3s;
+    border-right: 2px solid #ddd;
+}
+
+#sidebar.active {
+    margin-left: -210px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #6d7fcc;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 7px;
+    font-size: 16px;
+    display: block;
+}
+#sidebar ul li a:hover {
+    /* color: #7386D5;
+    background: #fff; */
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    /* color: #fff;
+    background: #6d7fcc; */
+}
+
+.nav_custom{
+    padding: 4px 0px;
+    background-color:#007bff;
+}
+
+.color_opcion_menu{
+    color: #8c8c8c;
+}
+
+.color_opcion_menu:hover{
+    color: #4d4d4d;
+} 
+
+.logo{
+    padding: 2px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px; 
+    background-color: #ffffff;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.icon_dropdown{
+    display: inline-block;
+    width: 73%;
+}
+
+.breadcrumb_custom{
+    padding: 3px 10px;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    font-size: 18px;    
+}
+
+.user_name_custo{
+    color:#ffffff;
+    font-weight: bold;
+
+}
+
+.user_name_custo:hover{
+    color: #BDBDBD;
+}
+
+.row_list_custom{
+    padding: 6px 10px;
+}
+
+
+.dt-buttons > button {
+    background-color: #E6E6E6;
+    color: black;
+}
+
+.table td {
+    padding: 3px 12px !important;
+}
+
+/* .dt-buttons{
+    float: left;
+} */
+
+.separar_boton{
+    margin-bottom: 2%;
+}
+
+
+/* .margin_lef_ajuste{
+    margin-left: -30px;
+} */
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+    min-height: 100vh;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+#content.active {
+    width: 100%;
+}
+
+.validar_campo{
+    display: none;
+    color:red;
+    font-size: 75%;
+}
+
+.mostrar_error_input{
+    display: block;
+}
+
+.borde_error{
+    border: 1px solid red;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -210px;
+    }
+    #sidebar.active {
+        margin-left: 0px;
+        min-width: 200px;
+        max-width: 200px;
+    }
+    /* #sidebarCollapse span {
+        display: none;
+    } */
+}
