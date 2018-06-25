@@ -45,5 +45,22 @@ Route::group(['middleware' => 'auth'],function(){
 		'as' => 'arls.validarDuplicado'
 	]);
 
+	Route::resource('epss','epsController');
+	Route::get('epss/{id}/destroy',[
+		'uses' => 'epsController@destroy',
+		'as' => 'epss.destroy'
+	]);	
+	Route::post('epss/crearAjax',[
+		'uses' => 'epsController@crearAjax',
+		'as' => 'epss.crearAjax'
+	]);
+	Route::get('epss/{id}/eliminarAjax',[
+		'uses' => 'epsController@eliminarAjax',
+		'as' => 'epss.eliminarAjax'
+	]);
+	Route::post('epss/validarDuplicado',[
+		'uses' => 'epsController@validarDuplicado',
+		'as' => 'epss.validarDuplicado'
+	]);
 
 });

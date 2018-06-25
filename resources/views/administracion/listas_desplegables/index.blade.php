@@ -26,7 +26,7 @@
           <tr>
               <td>EPSs</td>
               <td>
-                <a href="" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
+                <a href="{{ route('epss.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
                     <i class="fas fa-external-link-alt"></i>
                 </a>
               </td>
