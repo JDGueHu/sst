@@ -37,7 +37,7 @@
           <td>{{ $eps->llave }}</td>
           <td>{{ $eps->valor }}</td>
           <td>
-            <button id="borrar_arl" type="button" class="btn btn-outline-danger" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
+            <button id="{{ $eps->id }}" type="button" class="btn btn-outline-danger borrar_eps" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>

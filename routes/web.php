@@ -63,4 +63,22 @@ Route::group(['middleware' => 'auth'],function(){
 		'as' => 'epss.validarDuplicado'
 	]);
 
+	Route::resource('fondos_cesantias','fondosCesantiasController');
+	Route::get('fondos_cesantias/{id}/destroy',[
+		'uses' => 'fondosCesantiasController@destroy',
+		'as' => 'fondos_cesantias.destroy'
+	]);	
+	Route::post('fondos_cesantias/crearAjax',[
+		'uses' => 'fondosCesantiasController@crearAjax',
+		'as' => 'fondos_cesantias.crearAjax'
+	]);
+	Route::get('fondos_cesantias/{id}/eliminarAjax',[
+		'uses' => 'fondosCesantiasController@eliminarAjax',
+		'as' => 'fondos_cesantias.eliminarAjax'
+	]);
+	Route::post('fondos_cesantias/validarDuplicado',[
+		'uses' => 'fondosCesantiasController@validarDuplicado',
+		'as' => 'fondos_cesantias.validarDuplicado'
+	]);
+
 });

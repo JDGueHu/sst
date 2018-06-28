@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\ARL;
+use App\FondosCesantias;
 
-class arlController extends Controller
+class fondosCesantiasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class arlController extends Controller
      */
     public function index()
     {
-        $arls = ARL::orderBy('llave', 'asc')->get();
-        return view('administracion.listas_desplegables.arls.index')
-            ->with('arls',$arls);
+        $fondos_cesantias = FondosCesantias::orderBy('llave', 'asc')->get();
+        return view('administracion.listas_desplegables.fondos_cesantias.index')
+            ->with('fondos_cesantias',$fondos_cesantias);
     }
 
     /**
@@ -88,47 +88,48 @@ class arlController extends Controller
     public function validarDuplicado(Request $request)
     {
         $registro_duplicado = 1;
-        $arls = ARL::where('llave','=', $request->llave)->get();
+        $fondos_cesantias = FondosCesantias::where('llave','=', $request->llave)->get();
 
-        if ($arls->count() == 0) {
+        if ($fondos_cesantias->count() == 0) {
             $registro_duplicado = 0;       
         }
 
         return $registro_duplicado;
     }
 
-    // Creación de ARL ajax
+    // Creación de fonde de cesantías ajax
     public function crearAjax(Request $request)
     {
         if($request->ajax()){      
 
             try{
 
-                $arl = new ARL();
-                $arl->llave = $request->llave;
-                $arl->valor = $request->valor;
-                $arl->save();
+                $fondo_cesantias = new FondosCesantias();
+                $fondo_cesantias->llave = $request->llave;
+                $fondo_cesantias->valor = $request->valor;
+                $fondo_cesantias->save();
 
             }catch(Exception $e){
                 dd($e);
             }
 
-            return $arl;
+            return $fondo_cesantias;
 
         }
     }
 
-    // Eliminar ARL ajax
+    // Eliminar fonde de cesantías ajax
     public function eliminarAjax($id)
     {
     
         try{
-            $arl = ARL::find($id);
-            $arl->delete();
+            $fondo_cesantias = FondosCesantias::find($id);
+            $fondo_cesantias->delete();
 
         }catch(Exception $e){
             dd($e);
         }
 
     }
+    
 }
