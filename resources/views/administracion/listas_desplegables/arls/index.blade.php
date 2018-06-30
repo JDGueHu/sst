@@ -19,7 +19,15 @@
         {!! Form::label('llave', 'Ingrese un valor válido', ['class' => 'validar_campo','id'=>'error_valor']) !!}
     </div>
     <div class="col-md-3">
-      <button type="button" class="btn btn-outline-primary" id="boton_agregar_alr">Agregar</button>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="valor_por_defecto">
+        <label class="form-check-label" for="valor_por_defecto">
+          ¿Valor por defecto?
+        </label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <button type="button" class="btn btn-outline-primary" id="boton_agregar_alr">Guardar</button>
     </div>
 </div>
 
@@ -28,6 +36,7 @@
         <tr>
             <th>Llave</th>
             <th>Valor</th>
+            <th>¿Valor por defecto?</th>
             <th>Acción</th>
         </tr>
     </thead>
@@ -36,7 +45,19 @@
         <tr>
           <td>{{ $arl->llave }}</td>
           <td>{{ $arl->valor }}</td>
+          @if($arl->valor_por_defecto)
+            <td>
+              <span class="label label-success">Si</span>
+            </td>
+          @else
+            <td>
+              <span class="label label-danger">No</span>
+            </td>
+          @endif
           <td>
+            <button id="{{ $arl->id }}" type="button" class="btn btn-outline-warning modificar_arl" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
             <button id="{{ $arl->id }}" type="button" class="btn btn-outline-danger borrar_arl" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
               <i class="fas fa-trash-alt"></i>
             </button>

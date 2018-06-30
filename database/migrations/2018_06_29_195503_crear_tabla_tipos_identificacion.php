@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArlTable extends Migration
+class CrearTablaTiposIdentificacion extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateArlTable extends Migration
      */
     public function up()
     {
-        Schema::create('arl', function (Blueprint $table) {
+        Schema::create('tipos_identificacion', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('llave')->unique();
             $table->string('valor');
-            $table->boolean('valor_por_defecto')->default(false);
 
             $table->boolean('activo')->default(true);
 
@@ -33,6 +32,6 @@ class CreateArlTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('arl');
+        Schema::dropIfExists('tipos_identificacion');
     }
 }

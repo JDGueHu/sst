@@ -15,6 +15,12 @@ $(document).ready(function() {
             last:       "Última"
         	}
         },
+        columns: [
+            { "width": "30%" },
+            { "width": "30%" },
+            { "width": "15%" },
+            { "width": "25%" }
+          ],
         pageLength: 8,
         responsive: true
     });
@@ -54,10 +60,12 @@ $(document).ready(function() {
         
         var llave = $('#llave').val();
         var valor = $('#valor').val(); 
-
+        var valor_por_defecto= $('#valor_por_defecto').prop( "checked" );
+       
         var form_data = new FormData();
         form_data.append('llave', llave);
         form_data.append('valor', valor);
+        form_data.append('valor_por_defecto', valor_por_defecto);
         
         //Validar inputs vacios
         if(!$.fn.validarInputsVacios(form_data)){
@@ -71,7 +79,7 @@ $(document).ready(function() {
 
     //Función para validar el duplicado de llaves arl
     $.fn.validarDuplicadoArl = function(form_data) {
-
+        
         $.ajax({
             url: route('arls.validarDuplicado'),
             headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
@@ -119,13 +127,19 @@ $(document).ready(function() {
           data : form_data
         }).done(function(response){
            //console.log(response);
+            
+           var valor_por_defecto;
+
+            if(response.valor_por_defecto){valor_por_defecto= 'Si'}
+            else{valor_por_defecto= 'No'}
 
            if(response != null){
 
                 t.row.add( [
                     response.llave,
                     response.valor,
-                    '<button id='+ response.id +' type="button" class="btn btn-outline-danger borrar_arl" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
+                    valor_por_defecto,
+                    '<button id="{{ $arl->id }}" type="button" class="btn btn-outline-warning modificar_arl" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ response.id +' type="button" class="btn btn-outline-danger borrar_arl" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
                 ] ).draw( false );
 
                 $.notify({

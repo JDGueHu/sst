@@ -99,4 +99,22 @@ Route::group(['middleware' => 'auth'],function(){
 		'as' => 'fondos_pensiones.validarDuplicado'
 	]);
 
+	Route::resource('tipos_identificacion','fondoPensionesController');
+	Route::get('fondos_pensiones/{id}/destroy',[
+		'uses' => 'fondoPensionesController@destroy',
+		'as' => 'fondos_pensiones.destroy'
+	]);	
+	Route::post('fondos_pensiones/crearAjax',[
+		'uses' => 'fondoPensionesController@crearAjax',
+		'as' => 'fondos_pensiones.crearAjax'
+	]);
+	Route::get('fondos_pensiones/{id}/eliminarAjax',[
+		'uses' => 'fondoPensionesController@eliminarAjax',
+		'as' => 'fondos_pensiones.eliminarAjax'
+	]);
+	Route::post('fondos_pensiones/validarDuplicado',[
+		'uses' => 'fondoPensionesController@validarDuplicado',
+		'as' => 'fondos_pensiones.validarDuplicado'
+	]);
+
 });

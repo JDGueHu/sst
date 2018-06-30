@@ -104,9 +104,15 @@ class arlController extends Controller
 
             try{
 
+                // Buscar la opción marcada por defecto para descarmcar en caso que la nueva venga marcada
+                // $arl = ARL::where('valor_por_defecto', true)->firstOrFail();
+                // $arl->valor_por_defecto = false;
+                // $arl->save();
+
                 $arl = new ARL();
                 $arl->llave = $request->llave;
                 $arl->valor = $request->valor;
+                $arl->valor_por_defecto = $request->valor_por_defecto;
                 $arl->save();
 
             }catch(Exception $e){
