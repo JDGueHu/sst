@@ -27,8 +27,11 @@
       </div>
     </div>
     <div class="col-md-3">
-      <button type="button" class="btn btn-outline-primary" id="boton_agregar_alr">Guardar</button>
+      <button type="button" class="btn btn-outline-primary" id="agregar_arl">Agregar</button>
+      <button type="button" class="btn btn-outline-primary ocultar" id="modificar_arl">Modificar</button>
+      <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones_arl">x</button>
     </div>
+  
 </div>
 
 <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -45,13 +48,13 @@
         <tr>
           <td>{{ $arl->llave }}</td>
           <td>{{ $arl->valor }}</td>
-          @if($arl->valor_por_defecto)
+          @if($arl->valor_por_defecto == null)
             <td>
-              <span class="label label-success">Si</span>
+              <span class="badge badge-danger">No</span>
             </td>
           @else
             <td>
-              <span class="label label-danger">No</span>
+              <span class="badge badge-success">Si</span>
             </td>
           @endif
           <td>

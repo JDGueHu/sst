@@ -85,6 +85,18 @@ class epsController extends Controller
         //
     }
 
+    // Consultar una EPS ajax
+    public function consultarAjax($id)
+    {  
+        try{
+            $eps = EPS::find($id);            
+        }catch(Exception $e){
+            dd($e);
+        }
+
+        return $eps;
+    }
+
     public function validarDuplicado(Request $request)
     {
         $registro_duplicado = 1;
@@ -107,13 +119,70 @@ class epsController extends Controller
                 $eps = new EPS();
                 $eps->llave = $request->llave;
                 $eps->valor = $request->valor;
+
+                if($request->valor_por_defecto == 'true'){
+                    $eps_old = EPS::whereNotNull('valor_por_defecto')->first();
+
+                    if($eps_old != null){
+                        $eps_old->valor_por_defecto = null;
+                        $eps_old->save();
+                    }
+
+                    $eps->valor_por_defecto = $request->llave;
+                }
+
                 $eps->save();
+
+                $epss = EPS::orderBy('llave', 'asc')->get();
 
             }catch(Exception $e){
                 dd($e);
             }
 
-            return $eps;
+            return $epss;
+
+        }
+    }
+
+    // Creación de ARL ajax
+    public function editarAjax(Request $request)
+    {
+        if($request->ajax()){      
+            
+            try{
+
+                $eps = EPS::where('llave', '=', $request->llave)->first();
+
+                if($request->valor_por_defecto == 'true'){
+                    
+                    $eps_old = EPS::whereNotNull('valor_por_defecto')->first();
+
+                    if($eps_old != null){
+                        $eps_old->valor_por_defecto = null;
+                        $eps_old->save();
+                    }
+
+                    $eps->llave = $request->llave;
+                    $eps->valor = $request->valor;
+                    $eps->valor_por_defecto = $request->llave;
+
+                }else{
+                    
+                    $eps->llave = $request->llave;
+                    $eps->valor = $request->valor;
+                    $eps->valor_por_defecto = null;
+
+                }
+                
+                $eps->save();
+
+                $epss = EPS::orderBy('llave', 'asc')->get();
+
+            }catch(Exception $e){
+                dd($e);
+            }
+
+            return $epss;
 
         }
     }

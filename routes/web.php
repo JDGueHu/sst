@@ -44,6 +44,14 @@ Route::group(['middleware' => 'auth'],function(){
 		'uses' => 'arlController@validarDuplicado',
 		'as' => 'arls.validarDuplicado'
 	]);
+	Route::get('arls/{id}/consultarAjax',[
+		'uses' => 'arlController@consultarAjax',
+		'as' => 'arls.consultarAjax'
+	]);
+	Route::post('arls/editarAjax',[
+		'uses' => 'arlController@editarAjax',
+		'as' => 'arls.editarAjax'
+	]);
 
 	Route::resource('epss','epsController');
 	Route::get('epss/{id}/destroy',[
@@ -61,6 +69,14 @@ Route::group(['middleware' => 'auth'],function(){
 	Route::post('epss/validarDuplicado',[
 		'uses' => 'epsController@validarDuplicado',
 		'as' => 'epss.validarDuplicado'
+	]);
+	Route::get('epss/{id}/consultarAjax',[
+		'uses' => 'epsController@consultarAjax',
+		'as' => 'epss.consultarAjax'
+	]);
+	Route::post('epss/editarAjax',[
+		'uses' => 'epsController@editarAjax',
+		'as' => 'epss.editarAjax'
 	]);
 
 	Route::resource('fondos_cesantias','fondosCesantiasController');

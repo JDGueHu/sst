@@ -18,7 +18,7 @@ class CreateArlTable extends Migration
 
             $table->string('llave')->unique();
             $table->string('valor');
-            $table->boolean('valor_por_defecto')->default(false);
+            $table->string('valor_por_defecto')->nullable();
 
             $table->boolean('activo')->default(true);
 

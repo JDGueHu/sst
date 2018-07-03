@@ -19,7 +19,17 @@
         {!! Form::label('llave', 'Ingrese un valor válido', ['class' => 'validar_campo','id'=>'error_valor']) !!}
     </div>
     <div class="col-md-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="valor_por_defecto">
+        <label class="form-check-label" for="valor_por_defecto">
+          ¿Valor por defecto?
+        </label>
+      </div>
+    </div>
+    <div class="col-md-3">
       <button type="button" class="btn btn-outline-primary" id="boton_agregar_eps">Agregar</button>
+      <button type="button" class="btn btn-outline-primary ocultar" id="boton_modificar_eps">Modificar</button>
+      <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones_eps">x</button>
     </div>
 </div>
 
@@ -28,6 +38,7 @@
         <tr>
             <th>Llave</th>
             <th>Valor</th>
+            <th>¿Valor por defecto?</th>
             <th>Acción</th>
         </tr>
     </thead>
@@ -36,7 +47,19 @@
         <tr>
           <td>{{ $eps->llave }}</td>
           <td>{{ $eps->valor }}</td>
+          @if($eps->valor_por_defecto == null)
+            <td>
+              <span class="badge badge-danger">No</span>
+            </td>
+          @else
+            <td>
+              <span class="badge badge-success">Si</span>
+            </td>
+          @endif
           <td>
+          <button id="{{ $eps->id }}" type="button" class="btn btn-outline-warning modificar_eps" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
             <button id="{{ $eps->id }}" type="button" class="btn btn-outline-danger borrar_eps" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
               <i class="fas fa-trash-alt"></i>
             </button>

@@ -18,6 +18,7 @@ class CrearTablaFondosCesantias extends Migration
 
             $table->string('llave')->unique();
             $table->string('valor');
+            $table->string('valor_por_defecto')->nullable();
 
             $table->boolean('activo')->default(true);
             

@@ -85,6 +85,18 @@ class arlController extends Controller
         //
     }
 
+    // Consultar una ARL ajax
+    public function consultarAjax($id)
+    {  
+        try{
+            $arl = ARL::find($id);            
+        }catch(Exception $e){
+            dd($e);
+        }
+
+        return $arl;
+    }
+
     public function validarDuplicado(Request $request)
     {
         $registro_duplicado = 1;
@@ -101,33 +113,83 @@ class arlController extends Controller
     public function crearAjax(Request $request)
     {
         if($request->ajax()){      
-
+            
             try{
-
-                // Buscar la opción marcada por defecto para descarmcar en caso que la nueva venga marcada
-                // $arl = ARL::where('valor_por_defecto', true)->firstOrFail();
-                // $arl->valor_por_defecto = false;
-                // $arl->save();
 
                 $arl = new ARL();
                 $arl->llave = $request->llave;
                 $arl->valor = $request->valor;
-                $arl->valor_por_defecto = $request->valor_por_defecto;
+
+                if($request->valor_por_defecto == 'true'){
+                    $arl_old = ARL::whereNotNull('valor_por_defecto')->first();
+
+                    if($arl_old != null){
+                        $arl_old->valor_por_defecto = null;
+                        $arl_old->save();
+                    }
+
+                    $arl->valor_por_defecto = $request->llave;
+                }
+                
                 $arl->save();
+
+                $arls = ARL::orderBy('llave', 'asc')->get();
 
             }catch(Exception $e){
                 dd($e);
             }
 
-            return $arl;
+            return $arls;
+
+        }
+    }
+
+    // Creación de ARL ajax
+    public function editarAjax(Request $request)
+    {
+        if($request->ajax()){      
+            
+            try{
+
+                $arl = ARL::where('llave', '=', $request->llave)->first();
+
+                if($request->valor_por_defecto == 'true'){
+                    
+                    $arl_old = ARL::whereNotNull('valor_por_defecto')->first();
+
+                    if($arl_old != null){
+                        $arl_old->valor_por_defecto = null;
+                        $arl_old->save();
+                    }
+
+                    $arl->llave = $request->llave;
+                    $arl->valor = $request->valor;
+                    $arl->valor_por_defecto = $request->llave;
+
+                }else{
+                    
+                    $arl->llave = $request->llave;
+                    $arl->valor = $request->valor;
+                    $arl->valor_por_defecto = null;
+
+                }
+                
+                $arl->save();
+
+                $arls = ARL::orderBy('llave', 'asc')->get();
+
+            }catch(Exception $e){
+                dd($e);
+            }
+
+            return $arls;
 
         }
     }
 
     // Eliminar ARL ajax
     public function eliminarAjax($id)
-    {
-    
+    {  
         try{
             $arl = ARL::find($id);
             $arl->delete();
@@ -135,6 +197,5 @@ class arlController extends Controller
         }catch(Exception $e){
             dd($e);
         }
-
     }
 }

@@ -25,6 +25,20 @@ $(document).ready(function() {
         responsive: true
     });
 
+    $.fn.capturarDatos = function() {
+
+        var llave = $('#llave').val();
+        var valor = $('#valor').val(); 
+        var valor_por_defecto = $('#valor_por_defecto').prop( "checked" );
+       
+        var form_data = new FormData();
+        form_data.append('llave', llave);
+        form_data.append('valor', valor);
+        form_data.append('valor_por_defecto', valor_por_defecto);
+
+        return form_data;
+    }
+
     // Valida si los inputs requeridos están vacios
     $.fn.validarInputsVacios = function(form_data) {
 
@@ -56,16 +70,9 @@ $(document).ready(function() {
     ////////////////// ARL
 
     // Activación de funcionalidades para agregar una ARL
-    $('#boton_agregar_alr').on( 'click', function () {
-        
-        var llave = $('#llave').val();
-        var valor = $('#valor').val(); 
-        var valor_por_defecto= $('#valor_por_defecto').prop( "checked" );
+    $('#agregar_arl').on( 'click', function () { 
        
-        var form_data = new FormData();
-        form_data.append('llave', llave);
-        form_data.append('valor', valor);
-        form_data.append('valor_por_defecto', valor_por_defecto);
+        var form_data = $.fn.capturarDatos();
         
         //Validar inputs vacios
         if(!$.fn.validarInputsVacios(form_data)){
@@ -116,6 +123,9 @@ $(document).ready(function() {
     // Función para crear la nueva ARL
     $.fn.crearArl = function(form_data) {
 
+        //Para limpiar tabla y luego actualizar con todos los datos
+        t.clear().draw();
+
         $.ajax({
           url: route('arls.crearAjax'),
           headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
@@ -127,55 +137,161 @@ $(document).ready(function() {
           data : form_data
         }).done(function(response){
            //console.log(response);
-            
-           var valor_por_defecto;
+         
+            var valor_por_defecto;
 
-            if(response.valor_por_defecto){valor_por_defecto= 'Si'}
-            else{valor_por_defecto= 'No'}
+            response.forEach(function(element){
 
-           if(response != null){
+                if(element.valor_por_defecto == null){
+                    valor_por_defecto= '<span class="badge badge-danger">No</span>';
+                }
+                else{
+                    valor_por_defecto= '<span class="badge badge-success">Si</span>';
+                }
 
                 t.row.add( [
-                    response.llave,
-                    response.valor,
+                    element.llave,
+                    element.valor,
                     valor_por_defecto,
-                    '<button id="{{ $arl->id }}" type="button" class="btn btn-outline-warning modificar_arl" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ response.id +' type="button" class="btn btn-outline-danger borrar_arl" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
+                    '<button id='+ element.id +' type="button" class="btn btn-outline-warning modificar_arl" style="padding: 0px 3px; margin-right: 4px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ element.id +' type="button" class="btn btn-outline-danger borrar_arl" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
                 ] ).draw( false );
 
-                $.notify({
-                    // options
-                    message: 'La ARL <b>'+form_data.get('valor')+'</b> se creó exitosamente', 
-                },{
-                    // settings
-                    type: 'success',
-                    delay:3000,
-                    placement: {
-                        from: "bottom",
-                        align: "right"
-                    }
-                });
+            });
 
-            }else{
-
-                $.notify({
-                    // options
-                    message: 'Se ha generado un error, por favor comuníquese con el administrador del sistema', 
-                },{
-                    // settings
-                    type: 'danger',
-                    delay:3000,
-                    placement: {
-                        from: "bottom",
-                        align: "right"
-                    }
-                });
-            }
+            $.notify({
+                // options
+                message: 'La ARL <b>'+form_data.get('valor')+'</b> se creó exitosamente', 
+            },{
+                // settings
+                type: 'success',
+                delay:3000,
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
 
             $("#llave").val("");
             $("#valor").val("");
+            $('#valor_por_defecto').prop('checked', false);
 
         });   
     }
+
+    // Función para agregar datos a los inputs para modificar una ARL seleccionada
+    $('#example tbody').on( 'click', '.modificar_arl', function () {
+        
+        var id = $(this).attr('id');
+
+        // Ubicar los datos en los inputs
+        $.ajax({
+            url: route('arls.consultarAjax',{id: id}),
+            headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
+            type: 'GET',
+              datatype:'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+          }).done(function(response){
+              //console.log(response);
+              
+            $('#llave').prop('readonly', true);
+            $("#llave").val(response.llave);              
+            $("#valor").val(response.valor);
+
+            if(response.valor_por_defecto == null){
+                $('#valor_por_defecto').prop('checked', false);
+            }else{
+                $('#valor_por_defecto').prop('checked', true);
+            }
+
+            $("#agregar_arl").addClass("ocultar");
+            $("#modificar_arl").addClass("mostrar");
+            $("#reset_botones_arl").addClass("mostrar");
+        });
+
+    });
+
+    // Resetear datos en inputs y botones de modificación
+    $('#reset_botones_arl').on( 'click', function () {
+
+        $('#llave').prop('readonly', false);
+        $("#llave").val("");              
+        $("#valor").val("");  
+        $('#valor_por_defecto').prop('checked', false);
+
+
+        $("#agregar_arl").removeClass("ocultar");
+        $("#modificar_arl").removeClass("mostrar");
+        $("#reset_botones_arl").removeClass("mostrar");
+
+    });
+
+    // Modificación de ARL
+    $('#modificar_arl').on( 'click', function () {
+
+        //Para limpiar tabla y luego actualizar con todos los datos
+        t.clear().draw();     
+
+        var form_data = $.fn.capturarDatos();
+
+        $.ajax({
+            url: route('arls.editarAjax'),
+            headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
+            type: 'POST',
+            datatype:'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data : form_data
+          }).done(function(response){
+            console.log(response);
+
+            var valor_por_defecto;
+
+            response.forEach(function(element){
+
+                if(element.valor_por_defecto == null){
+                    valor_por_defecto= '<span class="badge badge-danger">No</span>';
+                }
+                else{
+                    valor_por_defecto= '<span class="badge badge-success">Si</span>';
+                }
+
+                t.row.add( [
+                    element.llave,
+                    element.valor,
+                    valor_por_defecto,
+                    '<button id='+ element.id +' type="button" class="btn btn-outline-warning modificar_arl" style="padding: 0px 3px; margin-right: 4px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ element.id +' type="button" class="btn btn-outline-danger borrar_arl" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
+                ] ).draw( false );
+
+            });
+
+            $.notify({
+                // options
+                message: 'La ARL <b>'+form_data.get('valor')+'</b> se modificó exitosamente', 
+            },{
+                // settings
+                type: 'warning',
+                delay:3000,
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
+
+            $('#llave').prop('readonly', false);
+            $("#llave").val("");
+            $("#valor").val("");
+            $('#valor_por_defecto').prop('checked', false);
+
+            $("#agregar_arl").removeClass("ocultar");
+            $("#modificar_arl").removeClass("mostrar");
+            $("#reset_botones").removeClass("mostrar");
+            
+        });
+
+    });
 
     // Eliminación de ARL    
     $('#example tbody').on( 'click', '.borrar_arl', function () {
@@ -272,12 +388,7 @@ $(document).ready(function() {
     // Activación de funcionalidades para agregar una ARL
     $('#boton_agregar_eps').on( 'click', function () {
 
-        var llave = $('#llave').val();
-        var valor = $('#valor').val(); 
-
-        var form_data = new FormData();
-        form_data.append('llave', llave);
-        form_data.append('valor', valor);
+        var form_data = $.fn.capturarDatos();
         
         //Validar inputs vacios
         if(!$.fn.validarInputsVacios(form_data)){
@@ -328,6 +439,9 @@ $(document).ready(function() {
     // Función para crear la nueva EPS
     $.fn.crearEps = function(form_data) {
 
+        //Para limpiar tabla y luego actualizar con todos los datos
+        t.clear().draw(); 
+
         $.ajax({
           url: route('epss.crearAjax'),
           headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
@@ -340,48 +454,160 @@ $(document).ready(function() {
         }).done(function(response){
            //console.log(response);
 
-           if(response != null){
+           var valor_por_defecto;
 
-                t.row.add( [
-                    response.llave,
-                    response.valor,
-                    '<button id="'+ response.id +'" type="button" class="btn btn-outline-danger borrar_eps" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
-                ] ).draw( false );
+           response.forEach(function(element){
 
-                $.notify({
-                    // options
-                    message: 'La EPS <b>'+form_data.get('valor')+'</b> se creó exitosamente', 
-                },{
-                    // settings
-                    type: 'success',
-                    delay:3000,
-                    placement: {
-                        from: "bottom",
-                        align: "right"
-                    }
-                });
+               if(element.valor_por_defecto == null){
+                   valor_por_defecto= '<span class="badge badge-danger">No</span>';
+               }
+               else{
+                   valor_por_defecto= '<span class="badge badge-success">Si</span>';
+               }
 
-            }else{
+               t.row.add( [
+                   element.llave,
+                   element.valor,
+                   valor_por_defecto,
+                   '<button id='+ element.id +' type="button" class="btn btn-outline-warning modificar_eps" style="padding: 0px 3px; margin-right: 4px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ element.id +' type="button" class="btn btn-outline-danger borrar_eps" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
+               ] ).draw( false );
 
-                $.notify({
-                    // options
-                    message: 'Se ha generado un error, por favor comuníquese con el administrador del sistema', 
-                },{
-                    // settings
-                    type: 'danger',
-                    delay:3000,
-                    placement: {
-                        from: "bottom",
-                        align: "right"
-                    }
-                });
-            }
+           });
 
-            $("#llave").val("");
-            $("#valor").val("");
+           $.notify({
+               // options
+               message: 'La EPS <b>'+form_data.get('valor')+'</b> se creó exitosamente', 
+           },{
+               // settings
+               type: 'success',
+               delay:3000,
+               placement: {
+                   from: "bottom",
+                   align: "right"
+               }
+           });
+
+           $("#llave").val("");
+           $("#valor").val("");
+           $('#valor_por_defecto').prop('checked', false);
 
         });   
     }
+
+    // Función para agregar datos a los inputs para modificar una EPS seleccionada
+    $('#example tbody').on( 'click', '.modificar_eps', function () {
+    
+        var id = $(this).attr('id');
+
+        // Ubicar los datos en los inputs
+        $.ajax({
+            url: route('epss.consultarAjax',{id: id}),
+            headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
+            type: 'GET',
+                datatype:'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            }).done(function(response){
+                //console.log(response);
+                
+            $('#llave').prop('readonly', true);
+            $("#llave").val(response.llave);              
+            $("#valor").val(response.valor);
+
+            if(response.valor_por_defecto == null){
+                $('#valor_por_defecto').prop('checked', false);
+            }else{
+                $('#valor_por_defecto').prop('checked', true);
+            }
+
+            $("#boton_agregar_eps").addClass("ocultar");
+            $("#boton_modificar_eps").addClass("mostrar");
+            $("#reset_botones_eps").addClass("mostrar");
+        });
+
+    });
+
+    // Resetear datos en inputs y botones de modificación
+    $('#reset_botones_eps').on( 'click', function () {
+
+        $('#llave').prop('readonly', false);
+        $("#llave").val("");              
+        $("#valor").val("");  
+        $('#valor_por_defecto').prop('checked', false);
+
+
+        $("#boton_agregar_eps").removeClass("ocultar");
+        $("#boton_modificar_eps").removeClass("mostrar");
+        $("#reset_botones_eps").removeClass("mostrar");
+
+    });
+
+    // Modificación de ARL
+    $('#boton_modificar_eps').on( 'click', function () {
+
+        //Para limpiar tabla y luego actualizar con todos los datos
+        t.clear().draw();     
+
+        var form_data = $.fn.capturarDatos();
+
+        $.ajax({
+            url: route('epss.editarAjax'),
+            headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
+            type: 'POST',
+            datatype:'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data : form_data
+          }).done(function(response){
+            console.log(response);
+
+            var valor_por_defecto;
+
+            response.forEach(function(element){
+
+                if(element.valor_por_defecto == null){
+                    valor_por_defecto= '<span class="badge badge-danger">No</span>';
+                }
+                else{
+                    valor_por_defecto= '<span class="badge badge-success">Si</span>';
+                }
+
+                t.row.add( [
+                    element.llave,
+                    element.valor,
+                    valor_por_defecto,
+                    '<button id='+ element.id +' type="button" class="btn btn-outline-warning modificar_eps" style="padding: 0px 3px; margin-right: 4px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ element.id +' type="button" class="btn btn-outline-danger borrar_eps" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
+                ] ).draw( false );
+
+            });
+
+            $.notify({
+                // options
+                message: 'La EPS <b>'+form_data.get('valor')+'</b> se modificó exitosamente', 
+            },{
+                // settings
+                type: 'warning',
+                delay:3000,
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
+
+            $('#llave').prop('readonly', false);
+            $("#llave").val("");
+            $("#valor").val("");
+            $('#valor_por_defecto').prop('checked', false);
+
+            $("#boton_agregar_eps").removeClass("ocultar");
+            $("#boton_modificar_eps").removeClass("mostrar");
+            $("#reset_botones_eps").removeClass("mostrar");
+            
+        });
+
+    });
 
     // Eliminación de EPS    
     $('#example tbody').on( 'click', '.borrar_eps', function () {
