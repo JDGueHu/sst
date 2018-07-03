@@ -144,7 +144,7 @@ class arlController extends Controller
         }
     }
 
-    // Creación de ARL ajax
+    // Modificación de ARL ajax
     public function editarAjax(Request $request)
     {
         if($request->ajax()){      

@@ -96,6 +96,14 @@ Route::group(['middleware' => 'auth'],function(){
 		'uses' => 'fondosCesantiasController@validarDuplicado',
 		'as' => 'fondos_cesantias.validarDuplicado'
 	]);
+	Route::get('fondos_cesantias/{id}/consultarAjax',[
+		'uses' => 'fondosCesantiasController@consultarAjax',
+		'as' => 'fondos_cesantias.consultarAjax'
+	]);
+	Route::post('fondos_cesantias/editarAjax',[
+		'uses' => 'fondosCesantiasController@editarAjax',
+		'as' => 'fondos_cesantias.editarAjax'
+	]);
 
 	Route::resource('fondos_pensiones','fondoPensionesController');
 	Route::get('fondos_pensiones/{id}/destroy',[
