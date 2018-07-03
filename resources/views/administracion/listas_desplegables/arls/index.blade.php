@@ -30,6 +30,7 @@
       <button type="button" class="btn btn-outline-primary" id="agregar_arl">Agregar</button>
       <button type="button" class="btn btn-outline-primary ocultar" id="modificar_arl">Modificar</button>
       <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones_arl">x</button>
+      <i id="spiner" class="fas fa-spinner spiner ocultar"></i>
     </div>
   
 </div>

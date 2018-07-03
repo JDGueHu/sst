@@ -30,6 +30,7 @@
       <button type="button" class="btn btn-outline-primary" id="boton_agregar_eps">Agregar</button>
       <button type="button" class="btn btn-outline-primary ocultar" id="boton_modificar_eps">Modificar</button>
       <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones_eps">x</button>
+      <i id="spiner" class="fas fa-spinner spiner ocultar"></i>
     </div>
 </div>
 

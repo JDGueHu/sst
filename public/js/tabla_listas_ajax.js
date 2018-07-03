@@ -123,6 +123,9 @@ $(document).ready(function() {
     // Función para crear la nueva ARL
     $.fn.crearArl = function(form_data) {
 
+        // Mostrar spiner
+        $("#spiner").removeClass("ocultar");
+
         //Para limpiar tabla y luego actualizar con todos los datos
         t.clear().draw();
 
@@ -157,6 +160,9 @@ $(document).ready(function() {
                 ] ).draw( false );
 
             });
+
+            //Ocultar spinner
+            $("#spiner").addClass("ocultar");
 
             $.notify({
                 // options
@@ -230,6 +236,9 @@ $(document).ready(function() {
     // Modificación de ARL
     $('#modificar_arl').on( 'click', function () {
 
+        // Mostrar spiner
+        $("#spiner").removeClass("ocultar");
+
         //Para limpiar tabla y luego actualizar con todos los datos
         t.clear().draw();     
 
@@ -266,6 +275,9 @@ $(document).ready(function() {
                 ] ).draw( false );
 
             });
+
+            //Ocultar spinner
+            $("#spiner").addClass("ocultar");
 
             $.notify({
                 // options
@@ -439,6 +451,9 @@ $(document).ready(function() {
     // Función para crear la nueva EPS
     $.fn.crearEps = function(form_data) {
 
+        // Mostrar spiner
+        $("#spiner").removeClass("ocultar");
+
         //Para limpiar tabla y luego actualizar con todos los datos
         t.clear().draw(); 
 
@@ -473,6 +488,9 @@ $(document).ready(function() {
                ] ).draw( false );
 
            });
+
+            //Ocultar spinner
+            $("#spiner").addClass("ocultar");
 
            $.notify({
                // options
@@ -546,6 +564,9 @@ $(document).ready(function() {
     // Modificación de ARL
     $('#boton_modificar_eps').on( 'click', function () {
 
+        // Mostrar spiner
+        $("#spiner").removeClass("ocultar");
+
         //Para limpiar tabla y luego actualizar con todos los datos
         t.clear().draw();     
 
@@ -582,6 +603,9 @@ $(document).ready(function() {
                 ] ).draw( false );
 
             });
+
+            //Ocultar spinner
+            $("#spiner").addClass("ocultar");
 
             $.notify({
                 // options
