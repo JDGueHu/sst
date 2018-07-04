@@ -5,7 +5,7 @@
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb breadcrumb_custom">
     <li class="breadcrumb-item color_breadcrum_href"><a href="{{ route('listas_desplegables.index') }}">Listas desplegables</a></li>
-    <li class="breadcrumb-item active" aria-current="page">ARLs</li>
+    <li class="breadcrumb-item active" aria-current="page">Tipos de identificación</li>
 </ol>
 </nav>
 
@@ -27,9 +27,9 @@
       </div>
     </div>
     <div class="col-md-3">
-      <button type="button" class="btn btn-outline-primary" id="agregar">Agregar</button>
-      <button type="button" class="btn btn-outline-primary ocultar" id="modificar">Modificar</button>
-      <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones">x</button>
+      <button type="button" class="btn btn-outline-primary" id="agregar_tipo_identificacion">Agregar</button>
+      <button type="button" class="btn btn-outline-primary ocultar" id="modificar_tipo_identificacion">Modificar</button>
+      <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones_tipo_identificacion">x</button>
       <i id="spiner" class="fas fa-spinner spiner ocultar"></i>
     </div>
   
@@ -45,11 +45,11 @@
         </tr>
     </thead>
     <tbody>
-      @foreach($arls as $arl)
+      @foreach($tipos_identificacion as $tipo_identificacion)
         <tr>
-          <td>{{ $arl->llave }}</td>
-          <td>{{ $arl->valor }}</td>
-          @if($arl->valor_por_defecto == null)
+          <td>{{ $tipo_identificacion->llave }}</td>
+          <td>{{ $tipo_identificacion->valor }}</td>
+          @if($tipo_identificacion->valor_por_defecto == null)
             <td>
               <span class="badge badge-danger">No</span>
             </td>
@@ -59,10 +59,10 @@
             </td>
           @endif
           <td>
-            <button id="{{ $arl->id }}" type="button" class="btn btn-outline-warning modificar" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
+            <button id="{{ $tipo_identificacion->id }}" type="button" class="btn btn-outline-warning modificar_tipo_identificacion" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button id="{{ $arl->id }}" type="button" class="btn btn-outline-danger borrar" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
+            <button id="{{ $tipo_identificacion->id }}" type="button" class="btn btn-outline-danger borrar_tipo_identificacion" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>
@@ -70,7 +70,6 @@
       @endforeach
     </tbody>
 </table> 
-{!! Form::hidden('modulo', 'arl',['id'=>'modulo']) !!}
 
 @endsection
 

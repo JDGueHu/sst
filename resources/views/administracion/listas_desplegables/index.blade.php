@@ -18,7 +18,7 @@
           <tr>
               <td>ARLs</td>
               <td>
-                <a href="{{ route('arls.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
+                <a href="{{ route('arl.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
                     <i class="fas fa-external-link-alt"></i>
                 </a>
               </td>
@@ -50,7 +50,7 @@
           <tr>
               <td>Tipos de identificación</td>
               <td>
-                <a href="{{ route('fondos_pensiones.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
+                <a href="{{ route('tipos_identificacion.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
                     <i class="fas fa-external-link-alt"></i>
                 </a>
               </td>

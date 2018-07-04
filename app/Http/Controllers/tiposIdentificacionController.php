@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TipoIdentificacion;
 
 class tiposIdentificacionController extends Controller
 {
@@ -13,7 +14,9 @@ class tiposIdentificacionController extends Controller
      */
     public function index()
     {
-        //
+        $tipos_identificacion = TipoIdentificacion::orderBy('llave', 'asc')->get();
+        return view('administracion.listas_desplegables.tipos_identificacion.index')
+            ->with('tipos_identificacion',$tipos_identificacion);
     }
 
     /**
