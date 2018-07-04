@@ -254,7 +254,7 @@ $(document).ready(function() {
             processData: false,
             data : form_data
           }).done(function(response){
-            console.log(response);
+            //console.log(response);
 
             var valor_por_defecto;
 
@@ -582,7 +582,7 @@ $(document).ready(function() {
             processData: false,
             data : form_data
           }).done(function(response){
-            console.log(response);
+            //console.log(response);
 
             var valor_por_defecto;
 
@@ -909,7 +909,7 @@ $(document).ready(function() {
             processData: false,
             data : form_data
           }).done(function(response){
-            console.log(response);
+            //console.log(response);
 
             var valor_por_defecto;
 
@@ -1051,15 +1051,10 @@ $(document).ready(function() {
 
     ////////////////// Fondos de pensiones
 
-    // Activación de funcionalidades para agregar un fondo de cesantías
+    // Activación de funcionalidades para agregar un fondo de pensiones
     $('#boton_agregar_fondos_pensiones').on( 'click', function () {
         
-        var llave = $('#llave').val();
-        var valor = $('#valor').val(); 
-
-        var form_data = new FormData();
-        form_data.append('llave', llave);
-        form_data.append('valor', valor);
+        var form_data = $.fn.capturarDatos();
         
         //Validar inputs vacios
         if(!$.fn.validarInputsVacios(form_data)){
@@ -1110,6 +1105,12 @@ $(document).ready(function() {
     // Función para crear la nuevo fonde de pensiones
     $.fn.crearFondoPensiones = function(form_data) {
 
+        // Mostrar spiner
+        $("#spiner").removeClass("ocultar");
+
+        //Para limpiar tabla y luego actualizar con todos los datos
+        t.clear().draw();  
+
         $.ajax({
           url: route('fondos_pensiones.crearAjax'),
           headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
@@ -1122,50 +1123,171 @@ $(document).ready(function() {
         }).done(function(response){
            //console.log(response);
 
-           if(response != null){
+           var valor_por_defecto;
 
-                t.row.add( [
-                    response.llave,
-                    response.valor,
-                    '<button id="'+ response.id +'" type="button" class="btn btn-outline-danger borrar_fondo_pension" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
-                ] ).draw( false );
+           response.forEach(function(element){
 
-                $.notify({
-                    // options
-                    message: 'El fondo de pensiones <b>'+form_data.get('valor')+'</b> se creó exitosamente', 
-                },{
-                    // settings
-                    type: 'success',
-                    delay:3000,
-                    placement: {
-                        from: "bottom",
-                        align: "right"
-                    }
-                });
+               if(element.valor_por_defecto == null){
+                   valor_por_defecto= '<span class="badge badge-danger">No</span>';
+               }
+               else{
+                   valor_por_defecto= '<span class="badge badge-success">Si</span>';
+               }
 
-            }else{
+               t.row.add( [
+                   element.llave,
+                   element.valor,
+                   valor_por_defecto,
+                   '<button id='+ element.id +' type="button" class="btn btn-outline-warning modificar_fondo_pension" style="padding: 0px 3px; margin-right: 4px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ element.id +' type="button" class="btn btn-outline-danger borrar_fondo_pension" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
+               ] ).draw( false );
 
-                $.notify({
-                    // options
-                    message: 'Se ha generado un error, por favor comuníquese con el administrador del sistema', 
-                },{
-                    // settings
-                    type: 'danger',
-                    delay:3000,
-                    placement: {
-                        from: "bottom",
-                        align: "right"
-                    }
-                });
-            }
+           });
 
-            $("#llave").val("");
-            $("#valor").val("");
+            //Ocultar spinner
+            $("#spiner").addClass("ocultar");
+
+           $.notify({
+               // options
+               message: 'El fondo de pensiones <b>'+form_data.get('valor')+'</b> se creó exitosamente', 
+           },{
+               // settings
+               type: 'success',
+               delay:3000,
+               placement: {
+                   from: "bottom",
+                   align: "right"
+               }
+           });
+
+           $("#llave").val("");
+           $("#valor").val("");
+           $('#valor_por_defecto').prop('checked', false);
 
         });   
     }
 
-    // Eliminación de fondo de cesantías    
+   // Función para agregar datos a los inputs para modificar un fonde de cesantias seleccionado
+   $('#example tbody').on( 'click', '.modificar_fondo_pension', function () {
+    
+        var id = $(this).attr('id');
+
+        // Ubicar los datos en los inputs
+        $.ajax({
+            url: route('fondos_pensiones.consultarAjax',{id: id}),
+            headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
+            type: 'GET',
+                datatype:'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            }).done(function(response){
+                //console.log(response);
+                
+            $('#llave').prop('readonly', true);
+            $("#llave").val(response.llave);              
+            $("#valor").val(response.valor);
+
+            if(response.valor_por_defecto == null){
+                $('#valor_por_defecto').prop('checked', false);
+            }else{
+                $('#valor_por_defecto').prop('checked', true);
+            }
+
+            $("#boton_agregar_fondos_pensiones").addClass("ocultar");
+            $("#modificar_fondos_pensiones").addClass("mostrar");
+            $("#reset_botones_fondos_pensiones").addClass("mostrar");
+        });
+
+    });
+
+    // Resetear datos en inputs y botones de modificación
+    $('#reset_botones_fondos_pensiones').on( 'click', function () {
+
+        $('#llave').prop('readonly', false);
+        $("#llave").val("");              
+        $("#valor").val("");  
+        $('#valor_por_defecto').prop('checked', false);
+
+
+        $("#boton_agregar_fondos_pensiones").removeClass("ocultar");
+        $("#modificar_fondos_pensiones").removeClass("mostrar");
+        $("#reset_botones_fondos_pensiones").removeClass("mostrar");
+
+    });
+
+    // Modificación de un fondo de cesantías
+    $('#modificar_fondos_pensiones').on( 'click', function () {
+
+        // Mostrar spiner
+        $("#spiner").removeClass("ocultar");
+
+        //Para limpiar tabla y luego actualizar con todos los datos
+        t.clear().draw();     
+
+        var form_data = $.fn.capturarDatos();
+
+        $.ajax({
+            url: route('fondos_pensiones.editarAjax'),
+            headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
+            type: 'POST',
+            datatype:'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data : form_data
+        }).done(function(response){
+            //console.log(response);
+
+            var valor_por_defecto;
+
+            response.forEach(function(element){
+
+                if(element.valor_por_defecto == null){
+                    valor_por_defecto= '<span class="badge badge-danger">No</span>';
+                }
+                else{
+                    valor_por_defecto= '<span class="badge badge-success">Si</span>';
+                }
+
+                t.row.add( [
+                    element.llave,
+                    element.valor,
+                    valor_por_defecto,
+                    '<button id='+ element.id +' type="button" class="btn btn-outline-warning modificar_fondo_pension" style="padding: 0px 3px; margin-right: 4px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ element.id +' type="button" class="btn btn-outline-danger borrar_fondo_pension" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
+                ] ).draw( false );
+
+            });
+
+            //Ocultar spinner
+            $("#spiner").addClass("ocultar");
+
+            $.notify({
+                // options
+                message: 'El fondo de pensiones <b>'+form_data.get('valor')+'</b> se modificó exitosamente', 
+            },{
+                // settings
+                type: 'warning',
+                delay:3000,
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
+
+            $('#llave').prop('readonly', false);
+            $("#llave").val("");
+            $("#valor").val("");
+            $('#valor_por_defecto').prop('checked', false);
+
+            $("#boton_agregar_fondos_cesantias").removeClass("ocultar");
+            $("#modificar_fondos_cesantias").removeClass("mostrar");
+            $("#reset_botones_fondos_cesantias").removeClass("mostrar");
+            
+        });
+
+    });
+
+    // Eliminación de fondo de pensiones    
     $('#example tbody').on( 'click', '.borrar_fondo_pension', function () {
 
         var id = $(this).attr('id');

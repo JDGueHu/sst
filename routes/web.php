@@ -122,6 +122,14 @@ Route::group(['middleware' => 'auth'],function(){
 		'uses' => 'fondoPensionesController@validarDuplicado',
 		'as' => 'fondos_pensiones.validarDuplicado'
 	]);
+	Route::get('fondos_pensiones/{id}/consultarAjax',[
+		'uses' => 'fondoPensionesController@consultarAjax',
+		'as' => 'fondos_pensiones.consultarAjax'
+	]);
+	Route::post('fondos_pensiones/editarAjax',[
+		'uses' => 'fondoPensionesController@editarAjax',
+		'as' => 'fondos_pensiones.editarAjax'
+	]);
 
 	Route::resource('tipos_identificacion','fondoPensionesController');
 	Route::get('fondos_pensiones/{id}/destroy',[

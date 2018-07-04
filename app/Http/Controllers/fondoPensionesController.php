@@ -85,6 +85,18 @@ class fondoPensionesController extends Controller
         //
     }
 
+    // Consultar un fondo de pensiones ajax
+    public function consultarAjax($id)
+    {  
+        try{
+            $fondo_pensiones = FondoPensiones::find($id);            
+        }catch(Exception $e){
+            dd($e);
+        }
+
+        return $fondo_pensiones;
+    }
+
     public function validarDuplicado(Request $request)
     {
         $registro_duplicado = 1;
@@ -107,13 +119,70 @@ class fondoPensionesController extends Controller
                 $fondo_pensiones = new FondoPensiones();
                 $fondo_pensiones->llave = $request->llave;
                 $fondo_pensiones->valor = $request->valor;
+
+                if($request->valor_por_defecto == 'true'){
+                    $fondo_pensiones_old = FondoPensiones::whereNotNull('valor_por_defecto')->first();
+
+                    if($fondo_pensiones_old != null){
+                        $fondo_pensiones_old->valor_por_defecto = null;
+                        $fondo_pensiones_old->save();
+                    }
+
+                    $fondo_pensiones->valor_por_defecto = $request->llave;
+                }
+                
                 $fondo_pensiones->save();
+
+                $fondos_pensiones = FondoPensiones::orderBy('llave', 'asc')->get();
 
             }catch(Exception $e){
                 dd($e);
             }
 
-            return $fondo_pensiones;
+            return $fondos_pensiones;
+
+        }
+    }
+
+    // Modificación de fonde de pensiones ajax
+    public function editarAjax(Request $request)
+    {
+        if($request->ajax()){      
+            
+            try{
+
+                $fondo_pensiones = FondoPensiones::where('llave', '=', $request->llave)->first();
+
+                if($request->valor_por_defecto == 'true'){
+                    
+                    $fondo_pensiones_old = FondoPensiones::whereNotNull('valor_por_defecto')->first();
+
+                    if($fondo_pensiones_old != null){
+                        $fondo_pensiones_old->valor_por_defecto = null;
+                        $fondo_pensiones_old->save();
+                    }
+
+                    $fondo_pensiones->llave = $request->llave;
+                    $fondo_pensiones->valor = $request->valor;
+                    $fondo_pensiones->valor_por_defecto = $request->llave;
+
+                }else{
+                    
+                    $fondo_pensiones->llave = $request->llave;
+                    $fondo_pensiones->valor = $request->valor;
+                    $fondo_pensiones->valor_por_defecto = null;
+
+                }
+                
+                $fondo_pensiones->save();
+
+                $fondos_pensiones = FondoPensiones::orderBy('llave', 'asc')->get();
+
+            }catch(Exception $e){
+                dd($e);
+            }
+
+            return $fondos_pensiones;
 
         }
     }
