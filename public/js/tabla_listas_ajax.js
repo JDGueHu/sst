@@ -53,6 +53,26 @@ $(document).ready(function() {
                 nombre_con_preposicion_mayuscula = "La ARL ";    
                 nombre_con_preposicion_minuscula = "la ARL ";             
                 break;
+            case 'eps':
+                nombre_singular = "EPS";
+                nombre_con_preposicion_mayuscula = "La EPS ";    
+                nombre_con_preposicion_minuscula = "la EPS ";             
+                break;
+            case 'fondos_cesantias':
+                nombre_singular = "Fondo de cesantías";
+                nombre_con_preposicion_mayuscula = "El fondo de censatías ";    
+                nombre_con_preposicion_minuscula = "el fondo de censatías ";             
+                break;
+            case 'fondos_pensiones':
+                nombre_singular = "Fondo de penciones";
+                nombre_con_preposicion_mayuscula = "El fondo de pensiones ";    
+                nombre_con_preposicion_minuscula = "el fondo de pensiones ";             
+                break;
+            case 'tipos_identificacion':
+                nombre_singular = "Tipo de identificación";
+                nombre_con_preposicion_mayuscula = "El tipo de identificación ";    
+                nombre_con_preposicion_minuscula = "el tipo de identificación ";             
+                break;
         }
 
         return [nombre_singular, nombre_con_preposicion_mayuscula, nombre_con_preposicion_minuscula];

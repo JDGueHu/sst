@@ -27,9 +27,9 @@
       </div>
     </div>
     <div class="col-md-3">
-      <button type="button" class="btn btn-outline-primary" id="boton_agregar_fondos_pensiones">Agregar</button>
-      <button type="button" class="btn btn-outline-primary ocultar" id="modificar_fondos_pensiones">Modificar</button>
-      <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones_fondos_pensiones">x</button>
+      <button type="button" class="btn btn-outline-primary" id="agregar">Agregar</button>
+      <button type="button" class="btn btn-outline-primary ocultar" id="modificar">Modificar</button>
+      <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones">x</button>
       <i id="spiner" class="fas fa-spinner spiner ocultar"></i>
     </div>
 </div>
@@ -58,10 +58,10 @@
             </td>
           @endif
           <td>
-            <button id="{{ $fondo_pension->id }}" type="button" class="btn btn-outline-warning modificar_fondo_pension" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
+            <button id="{{ $fondo_pension->id }}" type="button" class="btn btn-outline-warning modificar" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button id="{{ $fondo_pension->id }}" type="button" class="btn btn-outline-danger borrar_fondo_pension" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
+            <button id="{{ $fondo_pension->id }}" type="button" class="btn btn-outline-danger borrar" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>
@@ -69,6 +69,7 @@
       @endforeach
     </tbody>
 </table> 
+{!! Form::hidden('modulo', 'fondos_pensiones',['id'=>'modulo']) !!}
 
 @endsection
 

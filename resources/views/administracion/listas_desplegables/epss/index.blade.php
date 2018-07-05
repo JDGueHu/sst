@@ -5,7 +5,7 @@
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb breadcrumb_custom">
     <li class="breadcrumb-item color_breadcrum_href"><a href="{{ route('listas_desplegables.index') }}">Listas desplegables</a></li>
-    <li class="breadcrumb-item active" aria-current="page">EPSs</li>
+    <li class="breadcrumb-item active" aria-current="page">EPS</li>
 </ol>
 </nav>
 
@@ -27,9 +27,9 @@
       </div>
     </div>
     <div class="col-md-3">
-      <button type="button" class="btn btn-outline-primary" id="boton_agregar_eps">Agregar</button>
-      <button type="button" class="btn btn-outline-primary ocultar" id="boton_modificar_eps">Modificar</button>
-      <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones_eps">x</button>
+      <button type="button" class="btn btn-outline-primary" id="agregar">Agregar</button>
+      <button type="button" class="btn btn-outline-primary ocultar" id="modificar">Modificar</button>
+      <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones">x</button>
       <i id="spiner" class="fas fa-spinner spiner ocultar"></i>
     </div>
 </div>
@@ -58,10 +58,10 @@
             </td>
           @endif
           <td>
-          <button id="{{ $eps->id }}" type="button" class="btn btn-outline-warning modificar_eps" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
+          <button id="{{ $eps->id }}" type="button" class="btn btn-outline-warning modificar" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button id="{{ $eps->id }}" type="button" class="btn btn-outline-danger borrar_eps" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
+            <button id="{{ $eps->id }}" type="button" class="btn btn-outline-danger borrar" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>
@@ -69,6 +69,7 @@
       @endforeach
     </tbody>
 </table> 
+{!! Form::hidden('modulo', 'eps',['id'=>'modulo']) !!}
 
 @endsection
 

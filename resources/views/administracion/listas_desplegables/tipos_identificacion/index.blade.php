@@ -27,9 +27,9 @@
       </div>
     </div>
     <div class="col-md-3">
-      <button type="button" class="btn btn-outline-primary" id="agregar_tipo_identificacion">Agregar</button>
-      <button type="button" class="btn btn-outline-primary ocultar" id="modificar_tipo_identificacion">Modificar</button>
-      <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones_tipo_identificacion">x</button>
+      <button type="button" class="btn btn-outline-primary" id="agregar">Agregar</button>
+      <button type="button" class="btn btn-outline-primary ocultar" id="modificar">Modificar</button>
+      <button type="button" class="btn btn-outline-danger ocultar" id="reset_botones">x</button>
       <i id="spiner" class="fas fa-spinner spiner ocultar"></i>
     </div>
   
@@ -59,10 +59,10 @@
             </td>
           @endif
           <td>
-            <button id="{{ $tipo_identificacion->id }}" type="button" class="btn btn-outline-warning modificar_tipo_identificacion" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
+            <button id="{{ $tipo_identificacion->id }}" type="button" class="btn btn-outline-warning modificar" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button id="{{ $tipo_identificacion->id }}" type="button" class="btn btn-outline-danger borrar_tipo_identificacion" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
+            <button id="{{ $tipo_identificacion->id }}" type="button" class="btn btn-outline-danger borrar" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>
@@ -70,6 +70,7 @@
       @endforeach
     </tbody>
 </table> 
+{!! Form::hidden('modulo', 'tipos_identificacion',['id'=>'modulo']) !!}
 
 @endsection
 

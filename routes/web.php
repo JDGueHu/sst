@@ -49,5 +49,13 @@ Route::group(['middleware' => 'auth'],function(){
 
 	Route::resource('arl','arlController');
 
+	Route::resource('eps','epsController');
+
+	Route::resource('fondos_cesantias','fondosCesantiasController');
+
+	Route::resource('fondos_pensiones','fondoPensionesController');
+
+	Route::resource('tipos_identificacion','tiposIdentificacionController');
+
 
 });

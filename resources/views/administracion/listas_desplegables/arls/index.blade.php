@@ -5,7 +5,7 @@
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb breadcrumb_custom">
     <li class="breadcrumb-item color_breadcrum_href"><a href="{{ route('listas_desplegables.index') }}">Listas desplegables</a></li>
-    <li class="breadcrumb-item active" aria-current="page">ARLs</li>
+    <li class="breadcrumb-item active" aria-current="page">ARL</li>
 </ol>
 </nav>
 
