@@ -116,7 +116,7 @@ class listasDesplegablesController extends Controller
         return response()->json($registro);
     }
 
-    // Creación de del nuevo registro Ajax
+    // Creación de nuevo registro Ajax
     public function crearAjax(Request $request)
     {
         if($request->ajax()){      
@@ -158,6 +158,66 @@ class listasDesplegablesController extends Controller
 
                 $registros = DB::table($request->modulo)
                                     ->orderBy('llave', 'asc')->get();
+
+            }catch(Exception $e){
+                dd($e);
+            }
+
+            return $registros;
+
+        }
+    }
+
+    // Modificación de registro Ajax
+    public function editarAjax(Request $request)
+    {
+        if($request->ajax()){      
+            
+            try{
+
+                DB::table($request->modulo)
+                    ->where('llave', '=', $request->llave)
+                    ->update([
+                        'llave' => $request->llave,
+                        'valor' => $request->valor                    
+                    ]);
+
+                if($request->valor_por_defecto == 'true'){
+                    
+                    // Se busca el registro marcado por defecto
+                    $registro_por_defecto = DB::table($request->modulo)->where('valor_por_defecto', '<>', null)->get();
+
+                    // Se le quita al registro actual la opción por defecto
+                    if($registro_por_defecto->count() > 0){
+                        
+                        DB::table($request->modulo)
+                            ->where('id', '=', $registro_por_defecto[0]->id)
+                            ->update(['valor_por_defecto' => null]);
+
+                    }
+
+                    DB::table($request->modulo)
+                        ->where('llave', '=', $request->llave)
+                        ->update([
+                            'llave' => $request->llave,
+                            'valor' => $request->valor,  
+                            'valor_por_defecto' => $request->llave,                 
+                        ]);
+
+                }else{
+                    
+                    DB::table($request->modulo)
+                        ->where('llave', '=', $request->llave)
+                        ->update([
+                            'llave' => $request->llave,
+                            'valor' => $request->valor,  
+                            'valor_por_defecto' => null,                 
+                        ]);
+
+                }
+                
+                $registros = DB::table($request->modulo)
+                                ->orderBy('llave', 'asc')->get();
 
             }catch(Exception $e){
                 dd($e);

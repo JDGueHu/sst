@@ -219,7 +219,7 @@ $(document).ready(function() {
             cache: false,
             processData: false,
           }).done(function(response){
-              console.log(response);
+              //console.log(response);
               
             $('#llave').prop('readonly', true);
             $("#llave").val(response.llave);              
@@ -265,7 +265,7 @@ $(document).ready(function() {
         var form_data = $.fn.capturarDatos();
 
         $.ajax({
-            url: route('arls.editarAjax'),
+            url: route('listas_desplegables.editarAjax'),
             headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
             type: 'POST',
             datatype:'json',
@@ -291,7 +291,7 @@ $(document).ready(function() {
                     element.llave,
                     element.valor,
                     valor_por_defecto,
-                    '<button id='+ element.id +' type="button" class="btn btn-outline-warning modificar_arl" style="padding: 0px 3px; margin-right: 4px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ element.id +' type="button" class="btn btn-outline-danger borrar_arl" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
+                    '<button id='+ element.id +' type="button" class="btn btn-outline-warning modificar" style="padding: 0px 3px; margin-right: 4px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ element.id +' type="button" class="btn btn-outline-danger borrar" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
                 ] ).draw( false );
 
             });
@@ -301,7 +301,7 @@ $(document).ready(function() {
 
             $.notify({
                 // options
-                message: 'La ARL <b>'+form_data.get('valor')+'</b> se modificó exitosamente', 
+                message: $.fn.nombreModulo(form_data.get('modulo'))[1]+'<b>'+form_data.get('valor')+'</b> se modificó exitosamente', 
             },{
                 // settings
                 type: 'warning',
@@ -317,8 +317,8 @@ $(document).ready(function() {
             $("#valor").val("");
             $('#valor_por_defecto').prop('checked', false);
 
-            $("#agregar_arl").removeClass("ocultar");
-            $("#modificar_arl").removeClass("mostrar");
+            $("#agregar").removeClass("ocultar");
+            $("#modificar").removeClass("mostrar");
             $("#reset_botones").removeClass("mostrar");
             
         });
@@ -349,7 +349,7 @@ $(document).ready(function() {
 		    content: '' +
 		    '<form action="" class="formName">' +
 		    '<div class="form-group">' +
-		    '<label>Va a eliminar la '+$.fn.nombreModulo(form_data.get('modulo'))[1]+' <b>'+llave+'</b> ¿Desea continuar? </label>' +
+		    '<label>Va a eliminar '+$.fn.nombreModulo(form_data.get('modulo'))[2]+' <b>'+llave+'</b> ¿Desea continuar? </label>' +
 		    '</div>' +
 		    '</form>',
 		    buttons: {
