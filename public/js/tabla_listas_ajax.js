@@ -15,6 +15,7 @@ $(document).ready(function() {
             last:       "Última"
         	}
         },
+        order: [[ 1, "asc" ]],
         columns: [
             { "width": "30%" },
             { "width": "30%" },
@@ -72,6 +73,21 @@ $(document).ready(function() {
                 nombre_singular = "Tipo de identificación";
                 nombre_con_preposicion_mayuscula = "El tipo de identificación ";    
                 nombre_con_preposicion_minuscula = "el tipo de identificación ";             
+                break;
+            case 'generos':
+                nombre_singular = "Género";
+                nombre_con_preposicion_mayuscula = "El género ";    
+                nombre_con_preposicion_minuscula = "el género ";             
+                break;
+            case 'grupos_sanguineos':
+                nombre_singular = "Grupos sanguíneo";
+                nombre_con_preposicion_mayuscula = "El grupo sanguíneo ";    
+                nombre_con_preposicion_minuscula = "el grupo sanguíneo ";             
+                break;
+            case 'areas':
+                nombre_singular = "Área";
+                nombre_con_preposicion_mayuscula = "El área ";    
+                nombre_con_preposicion_minuscula = "el área ";             
                 break;
         }
 

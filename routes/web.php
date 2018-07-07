@@ -57,5 +57,10 @@ Route::group(['middleware' => 'auth'],function(){
 
 	Route::resource('tipos_identificacion','tiposIdentificacionController');
 
+	Route::resource('generos','generoController');
+
+	Route::resource('grupos_sanguineos','grupoSanguineoController');
+
+	Route::resource('areas','areaController');
 
 });

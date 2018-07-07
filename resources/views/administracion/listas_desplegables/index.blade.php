@@ -14,47 +14,71 @@
               <th>Acción</th>
           </tr>
       </thead>
-      <tbody>
-          <tr>
-              <td>ARLs</td>
-              <td>
+        <tbody>
+            <tr>
+                <td>Areas</td>
+                <td>
+                <a href="{{ route('areas.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                </td>
+            </tr>
+            <tr>
+                <td>ARLs</td>
+                <td>
                 <a href="{{ route('arl.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
                     <i class="fas fa-external-link-alt"></i>
                 </a>
-              </td>
-          </tr>
-          <tr>
-              <td>EPSs</td>
-              <td>
+                </td>
+            </tr>
+            <tr>
+                <td>EPSs</td>
+                <td>
                 <a href="{{ route('eps.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
                     <i class="fas fa-external-link-alt"></i>
                 </a>
-              </td>
-          </tr>
-          <tr>
-              <td>Fondos de cesantías</td>
-              <td>
+                </td>
+            </tr>
+            <tr>
+                <td>Fondos de cesantias</td>
+                <td>
                 <a href="{{ route('fondos_cesantias.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
                     <i class="fas fa-external-link-alt"></i>
                 </a>
-              </td>
-          </tr>
-          <tr>
-              <td>Fondos de pensiones</td>
-              <td>
+                </td>
+            </tr>
+            <tr>
+                <td>Fondos de pensiones</td>
+                <td>
                 <a href="{{ route('fondos_pensiones.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
                     <i class="fas fa-external-link-alt"></i>
                 </a>
-              </td>
-          </tr>
-          <tr>
-              <td>Tipos de identificación</td>
-              <td>
+                </td>
+            </tr>
+            <tr>
+                <td>Generos</td>
+                <td>
+                <a href="{{ route('generos.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                </td>
+            </tr>
+            <tr>
+                <td>Grupos sanguineos</td>
+                <td>
+                <a href="{{ route('grupos_sanguineos.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                </td>
+            </tr>
+            <tr>
+                <td>Tipos de identificacion</td>
+                <td>
                 <a href="{{ route('tipos_identificacion.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
                     <i class="fas fa-external-link-alt"></i>
                 </a>
-              </td>
-          </tr>
+                </td>
+            </tr>
       </tbody>
   </table> 
 
