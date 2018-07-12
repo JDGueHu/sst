@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AgregarTablaGruposSanguineos extends Migration
+class AgregarTablaNivelRiesgo extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AgregarTablaGruposSanguineos extends Migration
      */
     public function up()
     {
-        Schema::create('grupos_sanguineos', function (Blueprint $table) {
+        Schema::create('niveles_riesgo', function (Blueprint $table) {
             $table->increments('id');
     
             $table->string('llave')->unique();
@@ -34,6 +34,6 @@ class AgregarTablaGruposSanguineos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grupos_sanguineos');
+        Schema::dropIfExists('niveles_riesgo');
     }
 }

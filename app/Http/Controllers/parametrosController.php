@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class cargosController extends Controller
+class parametrosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class cargosController extends Controller
      */
     public function index()
     {
-        //
+        return view('administracion.parametros.index');
     }
 
     /**

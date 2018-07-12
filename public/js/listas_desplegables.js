@@ -22,7 +22,7 @@ $(document).ready(function() {
             { "width": "15%" },
             { "width": "25%" }
           ],
-        pageLength: 8,
+        pageLength: 9,
         responsive: true
     });
     
@@ -89,6 +89,11 @@ $(document).ready(function() {
                 nombre_con_preposicion_mayuscula = "El área ";    
                 nombre_con_preposicion_minuscula = "el área ";             
                 break;
+            case 'niveles_riesgo':
+                nombre_singular = "Nivel de riesgo ";
+                nombre_con_preposicion_mayuscula = "El nivel de riesgo ";    
+                nombre_con_preposicion_minuscula = "el nivel de riesgo ";             
+                break;
         }
 
         return [nombre_singular, nombre_con_preposicion_mayuscula, nombre_con_preposicion_minuscula];
@@ -138,7 +143,7 @@ $(document).ready(function() {
 
     });
 
-    //Función para validar el duplicado de llaves arl
+    //Función para validar el duplicado de llaves
     $.fn.validarRegistroDuplicado = function(form_data) {
         
         $.ajax({
@@ -221,7 +226,7 @@ $(document).ready(function() {
 
             $.notify({
                 // options
-                message: $.fn.nombreModulo(form_data.get('modulo'))[1]+'<b>'+form_data.get('valor')+'</b> se creó exitosamente', 
+                message: $.fn.nombreModulo(form_data.get('modulo'))[1]+'<b>'+form_data.get('llave')+'</b> se creó exitosamente', 
             },{
                 // settings
                 type: 'success',
@@ -239,7 +244,7 @@ $(document).ready(function() {
         });   
     }
 
-    // Función para agregar datos a los inputs para modificar una ARL seleccionada
+    // Función para agregar datos a los inputs para modificar un registro seleccionado
     $('#example tbody').on( 'click', '.modificar', function () {
         
         var id = $(this).attr('id');
@@ -337,7 +342,7 @@ $(document).ready(function() {
 
             $.notify({
                 // options
-                message: $.fn.nombreModulo(form_data.get('modulo'))[1]+'<b>'+form_data.get('valor')+'</b> se modificó exitosamente', 
+                message: $.fn.nombreModulo(form_data.get('modulo'))[1]+'<b>'+form_data.get('llave')+'</b> se modificó exitosamente', 
             },{
                 // settings
                 type: 'warning',

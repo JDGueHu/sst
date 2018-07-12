@@ -26,10 +26,13 @@
       <div id="item-1" class="collapse">
         <ul class="nav flex-column ml-3">
           <li class="nav-item">
-            <a class="nav-link color_opcion_menu" href="#">Usuarios</a>
+            <a class="nav-link color_opcion_menu" href="{{ route('listas_desplegables.index') }}">Listas desplegables</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link color_opcion_menu" href="{{ route('listas_desplegables.index') }}">Listas desplegables</a>
+            <a class="nav-link color_opcion_menu" href="{{ route('parametros.index') }}">Parámetros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link color_opcion_menu" href="#">Usuarios</a>
           </li>
         </ul>
       </div>

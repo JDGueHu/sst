@@ -18,7 +18,7 @@ $(document).ready(function() {
             last:       "Última"
         	}
         },
-        pageLength: 8,
+        pageLength: 9,
         responsive: true
     });
 } );

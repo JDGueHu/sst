@@ -72,6 +72,14 @@
                 </td>
             </tr>
             <tr>
+                <td>Niveles de riesgo</td>
+                <td>
+                <a href="{{ route('niveles_riesgo.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                </td>
+            </tr>
+            <tr>
                 <td>Tipos de identificacion</td>
                 <td>
                 <a href="{{ route('tipos_identificacion.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">

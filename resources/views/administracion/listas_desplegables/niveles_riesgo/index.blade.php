@@ -5,7 +5,7 @@
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb breadcrumb_custom">
     <li class="breadcrumb-item color_breadcrum_href"><a href="{{ route('listas_desplegables.index') }}">Listas desplegables</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Géneros</li>
+    <li class="breadcrumb-item active" aria-current="page">Niveles de riesgo</li>
 </ol>
 </nav>
 
@@ -44,11 +44,11 @@
         </tr>
     </thead>
     <tbody>
-      @foreach($generos as $genero)
+      @foreach($niveles_riesgo as $nivel_riesgo)
         <tr>
-          <td>{{ $genero->llave }}</td>
-          <td>{{ $genero->valor }}</td>
-          @if($genero->valor_por_defecto == null)
+          <td>{{ $nivel_riesgo->llave }}</td>
+          <td>{{ $nivel_riesgo->valor }}</td>
+          @if($nivel_riesgo->valor_por_defecto == null)
             <td>
               <span class="badge badge-danger">No</span>
             </td>
@@ -58,10 +58,10 @@
             </td>
           @endif
           <td>
-            <button id="{{ $genero->id }}" type="button" class="btn btn-outline-warning modificar" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
+            <button id="{{ $nivel_riesgo->id }}" type="button" class="btn btn-outline-warning modificar" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button id="{{ $genero->id }}" type="button" class="btn btn-outline-danger borrar" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
+            <button id="{{ $nivel_riesgo->id }}" type="button" class="btn btn-outline-danger borrar" style="padding: 0px 3px" title="Eliminar" data-toggle="tooltip">
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>
@@ -69,7 +69,7 @@
       @endforeach
     </tbody>
 </table> 
-{!! Form::hidden('modulo', 'generos',['id'=>'modulo']) !!}
+{!! Form::hidden('modulo', 'niveles_riesgo',['id'=>'modulo']) !!}
 
 @endsection
 

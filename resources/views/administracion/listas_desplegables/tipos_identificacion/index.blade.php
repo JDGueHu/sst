@@ -75,5 +75,5 @@
 @endsection
 
 @section('js')
-  <script src="{{ asset('js/tabla_listas_ajax.js') }}"></script>
+  <script src="{{ asset('js/listas_desplegables.js') }}"></script>
 @endsection
