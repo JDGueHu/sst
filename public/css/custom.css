@@ -78,7 +78,7 @@
 .breadcrumb_custom{
     padding: 3px 10px;
     margin-top: 1%;
-    margin-bottom: 2%;
+    margin-bottom: 1.5%;
     font-size: 18px;    
 }
 
@@ -114,10 +114,14 @@
     margin-bottom: 2%;
 }
 
+div.dt-buttons{
+    position: relative;
+    float: left;
+}
 
-/* .margin_lef_ajuste{
-    margin-left: -30px;
-} */
+#example{
+    margin-top: 1% !important;
+}
 
 /* ---------------------------------------------------
     CONTENT STYLE

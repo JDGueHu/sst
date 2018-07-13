@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Genero;
 
-class generoController extends Controller
+class generosController extends Controller
 {
     /**
      * Display a listing of the resource.

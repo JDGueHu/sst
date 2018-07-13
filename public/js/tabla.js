@@ -1,8 +1,14 @@
 $(document).ready(function() {
     $('#example').DataTable({
         dom: 'Bfrtip',
+        lengthMenu: [
+            [ 10, 25, 50, -1 ],
+            [ '10 registros', '25 registros', '50 registros', 'Mostrar todo' ]
+        ],
         buttons: [
-            'csv', 'excel', 'pdf'
+            'pageLength',
+            'csv',
+            'excel'
         ],
         language: {
             lengthMenu: "Mostrar _MENU_ registros por página",
@@ -18,7 +24,6 @@ $(document).ready(function() {
             last:       "Última"
         	}
         },
-        pageLength: 9,
         responsive: true
     });
 } );

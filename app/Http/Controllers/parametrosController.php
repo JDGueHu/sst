@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class parametrosController extends Controller
 {
@@ -116,7 +117,8 @@ class parametrosController extends Controller
                     [
                     'codigo' => $request->codigo,
                     'nombre' => $request->nombre,
-                    'nivel_riesgo_id' => $request->nivel_riesgo_id
+                    'nivel_riesgo_id' => $request->nivel_riesgo_id,
+                    'created_at' => Carbon::now()
                     ]
                 );
 
@@ -162,7 +164,8 @@ class parametrosController extends Controller
                     ->update([
                         'codigo' => $request->codigo,
                         'nombre' => $request->nombre,
-                        'nivel_riesgo_id' => $request->nivel_riesgo_id                 
+                        'nivel_riesgo_id' => $request->nivel_riesgo_id,
+                        'updated_at' => Carbon::now()               
                     ]);
                 
                 $registros = DB::table($request->modulo)

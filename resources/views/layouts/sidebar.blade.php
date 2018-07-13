@@ -39,7 +39,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{{ route('empleados.index') }}">
         <div class="row">
           <div class="col-2">
             <i class="fas fa-users" style="color:#ff5722;"></i>

@@ -49,11 +49,11 @@ Route::group(['middleware' => 'auth'],function(){
 
 	Route::resource('fondos_cesantias','fondosCesantiasController');
 
-	Route::resource('fondos_pensiones','fondoPensionesController');
+	Route::resource('fondos_pensiones','fondosPensionesController');
 
 	Route::resource('tipos_identificacion','tiposIdentificacionController');
 
-	Route::resource('generos','generoController');
+	Route::resource('generos','generosController');
 
 	Route::resource('grupos_sanguineos','grupoSanguineoController');
 
@@ -88,6 +88,8 @@ Route::group(['middleware' => 'auth'],function(){
 	Route::resource('centros_trabajo','centrosTrabajoController');
 
 	Route::resource('cargos','cargosController');
+
+	Route::resource('empleados','empleadosController');
 
 
 });

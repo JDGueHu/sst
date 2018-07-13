@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class listasDesplegablesController extends Controller
 {
@@ -128,7 +129,8 @@ class listasDesplegablesController extends Controller
                 $registro = DB::table($request->modulo)->insert(
                     [
                     'llave' => $request->llave,
-                    'valor' => $request->valor
+                    'valor' => $request->valor,
+                    'created_at' => Carbon::now()
                     ]
                 );
 
@@ -179,7 +181,8 @@ class listasDesplegablesController extends Controller
                     ->where('llave', '=', $request->llave)
                     ->update([
                         'llave' => $request->llave,
-                        'valor' => $request->valor                    
+                        'valor' => $request->valor,
+                        'updated_at' => Carbon::now()                   
                     ]);
 
                 if($request->valor_por_defecto == 'true'){

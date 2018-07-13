@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\FondoPensiones;
+use App\Empleado;
 
-class fondoPensionesController extends Controller
+class empleadosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,10 @@ class fondoPensionesController extends Controller
      */
     public function index()
     {
-        $fondos_pensiones = FondoPensiones::orderBy('llave', 'asc')->get();
-        return view('administracion.listas_desplegables.fondos_pensiones.index')
-            ->with('fondos_pensiones',$fondos_pensiones);
+        $empleados = Empleado::where('activo',true)->get();
+
+        return view('empleados.index')
+            ->with('empleados',$empleados);
     }
 
     /**
@@ -84,5 +85,4 @@ class fondoPensionesController extends Controller
     {
         //
     }
-
 }

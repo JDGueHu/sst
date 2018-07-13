@@ -15,6 +15,14 @@ $(document).ready(function() {
             last:       "Última"
         	}
         },
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [ 10, 25, 50, -1 ],
+            [ '10 registros', '25 registros', '50 registros', 'Mostrar todo' ]
+        ],
+        buttons: [
+            'pageLength'
+        ],
         order: [[ 1, "asc" ]],
         columns: [
             { "width": "30%" },
@@ -22,7 +30,6 @@ $(document).ready(function() {
             { "width": "15%" },
             { "width": "25%" }
           ],
-        pageLength: 9,
         responsive: true
     });
     
