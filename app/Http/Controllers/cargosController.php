@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\CentroTrabajo;
+use App\Cargo;
 use App\NivelRiesgo;
 
-class centrosTrabajoController extends Controller
+class cargosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class centrosTrabajoController extends Controller
      */
     public function index()
     {
-        $centros_trabajo = DB::table('centros_trabajo')
-            ->leftJoin('niveles_riesgo', 'centros_trabajo.nivel_riesgo_id', '=', 'niveles_riesgo.id')
-            ->where('centros_trabajo.activo',true)
-            ->select('centros_trabajo.*', 'niveles_riesgo.llave', 'niveles_riesgo.valor')
+        $cargos = DB::table('cargos')
+            ->leftJoin('niveles_riesgo', 'cargos.nivel_riesgo_id', '=', 'niveles_riesgo.id')
+            ->where('cargos.activo',true)
+            ->select('cargos.*', 'niveles_riesgo.llave', 'niveles_riesgo.valor')
             ->get();
         
         $niveles_riesgo = NivelRiesgo::select(DB::raw("CONCAT('', llave, ' - ', valor) AS nombre"),'id')->get()->pluck('nombre','id');
@@ -29,8 +29,8 @@ class centrosTrabajoController extends Controller
         if($nivel_riesgo_default != null){$nivel_riesgo_default = $nivel_riesgo_default->id;}
 
 
-        return view('administracion.parametros.centros_trabajo.index')
-            ->with('centros_trabajo',$centros_trabajo)
+        return view('administracion.parametros.cargos.index')
+            ->with('cargos',$cargos)
             ->with('niveles_riesgo',$niveles_riesgo)
             ->with('nivel_riesgo_default',$nivel_riesgo_default);
     }
@@ -100,5 +100,4 @@ class centrosTrabajoController extends Controller
     {
         //
     }
-
 }

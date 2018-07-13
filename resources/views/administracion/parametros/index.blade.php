@@ -16,11 +16,19 @@
       </thead>
         <tbody>
             <tr>
+                <td>Cargos</td>
+                <td>
+                    <a href="{{ route('cargos.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr>
                 <td>Centros de trabajo</td>
                 <td>
-                <a href="{{ route('centros_trabajo.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
-                    <i class="fas fa-external-link-alt"></i>
-                </a>
+                    <a href="{{ route('centros_trabajo.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
                 </td>
             </tr>
       </tbody>

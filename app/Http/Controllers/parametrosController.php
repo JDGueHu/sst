@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class parametrosController extends Controller
@@ -81,4 +82,118 @@ class parametrosController extends Controller
     {
         //
     }
+
+    // Validación de duplicidad de registro Ajax
+    public function validarDuplicado(Request $request)
+    {
+        if($request->ajax()){ 
+
+            //El valor de la variable módulo es la tabla en la que se debe validar la duplicidad            
+            $duplicado = 1;
+            $registro = DB::table($request->modulo)
+                ->where('codigo', '=', $request->codigo)
+                ->where('activo',true)
+                ->get();
+
+            if ($registro->count() == 0) {
+                $duplicado = 0;       
+            }
+
+            return $duplicado;
+
+        }
+    }
+
+    // Creación de nuevo registro Ajax
+    public function crearAjax(Request $request)
+    {
+        if($request->ajax()){      
+            
+            try{
+
+                // Se crea el registro en la tabla
+                $registro = DB::table($request->modulo)->insert(
+                    [
+                    'codigo' => $request->codigo,
+                    'nombre' => $request->nombre,
+                    'nivel_riesgo_id' => $request->nivel_riesgo_id
+                    ]
+                );
+
+                $registros = DB::table($request->modulo)
+                    ->leftJoin('niveles_riesgo', $request->modulo.'.nivel_riesgo_id', '=', 'niveles_riesgo.id')
+                    ->where($request->modulo.'.activo',true)
+                    ->select($request->modulo.'.*', 'niveles_riesgo.llave', 'niveles_riesgo.valor')
+                    ->get();
+
+            }catch(Exception $e){
+                dd($e);
+            }
+
+            return $registros;
+
+        }
+    }
+
+    // Consultar registro Ajax
+    public function consultarAjax($modulo, $id)
+    {  
+        try{
+
+            $registro = DB::table($modulo)->where('id', $id)->first();  
+
+        }catch(Exception $e){
+            dd($e);
+        }
+
+        return response()->json($registro);
+    }
+
+    // Modificación de registro Ajax
+    public function editarAjax(Request $request)
+    {
+        if($request->ajax()){      
+            
+            try{
+
+                DB::table($request->modulo)
+                    ->where('codigo', '=', $request->codigo)
+                    ->where('activo', true)
+                    ->update([
+                        'codigo' => $request->codigo,
+                        'nombre' => $request->nombre,
+                        'nivel_riesgo_id' => $request->nivel_riesgo_id                 
+                    ]);
+                
+                $registros = DB::table($request->modulo)
+                    ->leftJoin('niveles_riesgo', $request->modulo.'.nivel_riesgo_id', '=', 'niveles_riesgo.id')
+                    ->where($request->modulo.'.activo',true)
+                    ->select($request->modulo.'.*', 'niveles_riesgo.llave', 'niveles_riesgo.valor')
+                    ->get();
+
+            }catch(Exception $e){
+                dd($e);
+            }
+
+            return $registros;
+
+        }
+    }
+
+    // Eliminación de regsitro Ajax
+    public function eliminarAjax($modulo,$id)
+    {  
+        try{
+
+            DB::table($modulo)
+                ->where('id', '=', $id)
+                ->update([
+                    'activo' => false             
+            ]);
+
+        }catch(Exception $e){
+            dd($e);
+        }
+    }
+
 }

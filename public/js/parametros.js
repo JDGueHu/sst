@@ -111,7 +111,7 @@ $(document).ready(function() {
     $.fn.validarRegistroDuplicado = function(form_data) {
         
         $.ajax({
-            url: route('centros_trabajo.validarDuplicado'),
+            url: route('parametros.validarDuplicado'),
             headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
             type: 'POST',
             datatype:'json',
@@ -153,7 +153,7 @@ $(document).ready(function() {
         t.clear().draw();
 
         $.ajax({
-          url: route('centros_trabajo.crearAjax'),
+          url: route('parametros.crearAjax'),
           headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
           type: 'POST',
           datatype:'json',
@@ -206,7 +206,7 @@ $(document).ready(function() {
 
         // Ubicar los datos en los inputs
         $.ajax({
-            url: route('centros_trabajo.consultarAjax',{modulo: modulo, id: id}),
+            url: route('parametros.consultarAjax',{modulo: modulo, id: id}),
             headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
             type: 'GET',
             datatype:'json',
@@ -256,7 +256,7 @@ $(document).ready(function() {
         var form_data = $.fn.capturarDatos();
 
         $.ajax({
-            url: route('centros_trabajo.editarAjax'),
+            url: route('parametros.editarAjax'),
             headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
             type: 'POST',
             datatype:'json',
@@ -340,7 +340,7 @@ $(document).ready(function() {
 		            action: function () {
 
 		                $.ajax({
-						  url: route('centros_trabajo.eliminarAjax',{modulo: form_data.get('modulo'),id: id}),
+						  url: route('parametros.eliminarAjax',{modulo: form_data.get('modulo'),id: id}),
 						  headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
 						  type: 'GET',
 				  		  datatype:'json',

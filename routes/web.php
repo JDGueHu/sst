@@ -64,27 +64,30 @@ Route::group(['middleware' => 'auth'],function(){
 	Route::resource('cargos','nivelesRiesgoController');
 
 	Route::resource('parametros','parametrosController');
+	Route::post('parametros/crearAjax',[
+		'uses' => 'parametrosController@crearAjax',
+		'as' => 'parametros.crearAjax'
+	]);
+	Route::get('parametros/{modulo}/{id}/eliminarAjax',[
+		'uses' => 'parametrosController@eliminarAjax',
+		'as' => 'parametros.eliminarAjax'
+	]);
+	Route::post('parametros/validarDuplicado',[
+		'uses' => 'parametrosController@validarDuplicado',
+		'as' => 'parametros.validarDuplicado'
+	]);
+	Route::get('parametros/{modulo}/{id}/consultarAjax',[
+		'uses' => 'parametrosController@consultarAjax',
+		'as' => 'parametros.consultarAjax'
+	]);
+	Route::post('parametros/editarAjax',[
+		'uses' => 'parametrosController@editarAjax',
+		'as' => 'parametros.editarAjax'
+	]);
 
 	Route::resource('centros_trabajo','centrosTrabajoController');
-	Route::post('centros_trabajo/crearAjax',[
-		'uses' => 'centrosTrabajoController@crearAjax',
-		'as' => 'centros_trabajo.crearAjax'
-	]);
-	Route::get('centros_trabajo/{modulo}/{id}/eliminarAjax',[
-		'uses' => 'centrosTrabajoController@eliminarAjax',
-		'as' => 'centros_trabajo.eliminarAjax'
-	]);
-	Route::post('centros_trabajo/validarDuplicado',[
-		'uses' => 'centrosTrabajoController@validarDuplicado',
-		'as' => 'centros_trabajo.validarDuplicado'
-	]);
-	Route::get('centros_trabajo/{modulo}/{id}/consultarAjax',[
-		'uses' => 'centrosTrabajoController@consultarAjax',
-		'as' => 'centros_trabajo.consultarAjax'
-	]);
-	Route::post('centros_trabajo/editarAjax',[
-		'uses' => 'centrosTrabajoController@editarAjax',
-		'as' => 'centros_trabajo.editarAjax'
-	]);
+
+	Route::resource('cargos','cargosController');
+
 
 });
