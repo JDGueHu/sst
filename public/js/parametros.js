@@ -17,10 +17,9 @@ $(document).ready(function() {
         },
         order: [[ 1, "asc" ]],
         columns: [
+            { "width": "25%" },
+            { "width": "30%" },
             { "width": "20%" },
-            { "width": "20%" },
-            { "width": "20%" },
-            { "width": "15%" },
             { "width": "25%" }
           ],
         pageLength: 9,
@@ -163,25 +162,14 @@ $(document).ready(function() {
           processData: false,
           data : form_data
         }).done(function(response){
-           //console.log(response);
-
-           var activo;
 
             //Rearma la tabla con base en los datos del nuevo registro
             response.forEach(function(element){
-
-                if(!element.activo){
-                    activo= '<span class="badge badge-danger">No</span>';
-                }
-                else{
-                    activo= '<span class="badge badge-success">Si</span>';
-                }
 
                 t.row.add( [
                     element.codigo,
                     element.nombre,
                     (element.llave != null || element.valor != null) ? element.llave+' - '+element.valor : '',
-                    activo,
                     '<button id='+ element.id +' type="button" class="btn btn-outline-warning modificar" style="padding: 0px 3px; margin-right: 4px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ element.id +' type="button" class="btn btn-outline-danger borrar" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
                 ] ).draw( false );
 
@@ -254,6 +242,165 @@ $(document).ready(function() {
         $("#modificar").removeClass("mostrar");
         $("#reset_botones").removeClass("mostrar");
 
+    });
+
+    // Modificación de un registro
+    $('#modificar').on( 'click', function () {
+
+        // Mostrar spiner
+        $("#spiner").removeClass("ocultar");
+
+        //Para limpiar tabla y luego actualizar con todos los datos
+        t.clear().draw();     
+
+        var form_data = $.fn.capturarDatos();
+
+        $.ajax({
+            url: route('centros_trabajo.editarAjax'),
+            headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
+            type: 'POST',
+            datatype:'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data : form_data
+          }).done(function(response){
+            //console.log(response);
+
+            response.forEach(function(element){
+
+                t.row.add( [
+                    element.codigo,
+                    element.nombre,
+                    (element.llave != null || element.valor != null) ? element.llave+' - '+element.valor : '',
+                    '<button id='+ element.id +' type="button" class="btn btn-outline-warning modificar" style="padding: 0px 3px; margin-right: 4px" title="Modificar" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></button><button id='+ element.id +' type="button" class="btn btn-outline-danger borrar" style="padding: 0px 3px; margin-right: 4px" title="Eliminar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></button>'
+                ] ).draw( false );
+
+            });
+
+            //Ocultar spinner
+            $("#spiner").addClass("ocultar");
+
+            $.notify({
+                // options
+                message: $.fn.nombreModulo(form_data.get('modulo'))[1]+'<b>'+form_data.get('codigo')+'</b> se modificó exitosamente', 
+            },{
+                // settings
+                type: 'warning',
+                delay:3000,
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
+
+            $('#codigo').prop('readonly', false);
+            $("#codigo").val("");
+            $("#nombre").val("");
+            $('#nivel_riesgo_id').val("");
+
+            $("#agregar").removeClass("ocultar");
+            $("#modificar").removeClass("mostrar");
+            $("#reset_botones").removeClass("mostrar");
+            
+        });
+    });
+
+    // Borrar un registro    
+    $('#example tbody').on( 'click', '.borrar', function () {
+
+        // Mostrar spiner
+        $("#spiner").removeClass("ocultar");
+
+        var form_data = $.fn.capturarDatos();
+
+        var id = $(this).attr('id');
+        var codigo = $(this).parents('tr').children().eq(1).text();
+
+        if ( $(this).parents('tr').hasClass('eliminar') ) {
+            $(this).parents('tr').removeClass('eliminar');
+        }
+        else {
+            t.$('tr.eliminar').removeClass('eliminar');
+            $(this).parents('tr').addClass('eliminar');
+        }  
+
+        $.confirm({
+		    title: 'Eliminar '+$.fn.nombreModulo(form_data.get('modulo'))[0],
+		    content: '' +
+		    '<form action="" class="formName">' +
+		    '<div class="form-group">' +
+		    '<label>Va a eliminar '+$.fn.nombreModulo(form_data.get('modulo'))[2]+' <b>'+codigo+'</b> ¿Desea continuar? </label>' +
+		    '</div>' +
+		    '</form>',
+		    buttons: {
+		        formSubmit: {
+		            text: 'Continuar',
+		            btnClass: 'btn-blue',
+		            action: function () {
+
+		                $.ajax({
+						  url: route('centros_trabajo.eliminarAjax',{modulo: form_data.get('modulo'),id: id}),
+						  headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
+						  type: 'GET',
+				  		  datatype:'json',
+				          contentType: false,
+				          cache: false,
+						  processData: false,
+						}).done(function(){
+                            //console.log();
+
+                            t.row('.eliminar').remove().draw( false );
+
+                            $.notify({
+                                // options
+                                message: 'Se ha eliminado '+$.fn.nombreModulo(form_data.get('modulo'))[2]+' <b>'+ codigo +'</b> exitosamente', 
+                            },{
+                                // settings
+                                type: 'danger',
+                                delay:3000,
+                                placement: {
+                                    from: "bottom",
+                                    align: "right"
+                                }
+                            });
+
+						}).fail(function(response){ // Error en la petición
+                            
+                            $.notify({
+                                // options
+                                message: 'Se ha generado un error, por favor comuníquese con el administrador del sistema', 
+                            },{
+                                // settings
+                                type: 'danger',
+                                delay:3000,
+                                placement: {
+                                    from: "bottom",
+                                    align: "right"
+                                }
+                            });
+
+                        });
+                    
+                    //Ocultar spinner
+                    $("#spiner").addClass("ocultar");
+
+		            }
+		        },
+		        Cancelar: function () {
+		            //close
+		        },
+		    },
+		    onContentReady: function () {
+		        // bind to events
+		        var jc = this;
+		        this.$content.find('form').on('submit', function (e) {
+		            // if the user submits the form by pressing enter in the field.
+		            e.preventDefault();
+		            jc.$$formSubmit.trigger('click'); // reference the button and click it
+		        });
+		    }	    
+		});      
     });
 
 });

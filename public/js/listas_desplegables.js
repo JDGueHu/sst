@@ -294,7 +294,7 @@ $(document).ready(function() {
 
     });
 
-    // Modificación de ARL
+    // Modificación de un registro
     $('#modificar').on( 'click', function () {
 
         // Mostrar spiner

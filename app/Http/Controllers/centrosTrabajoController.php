@@ -106,8 +106,7 @@ class centrosTrabajoController extends Controller
     {
         if($request->ajax()){ 
 
-            //El valor de la variable módulo es la tabla en la que se debe validar la duplicidad
-            
+            //El valor de la variable módulo es la tabla en la que se debe validar la duplicidad            
             $duplicado = 1;
             $registro = DB::table($request->modulo)
                 ->where('codigo', '=', $request->codigo)
@@ -130,8 +129,7 @@ class centrosTrabajoController extends Controller
             
             try{
 
-                // Se crea el registro en la tabla sin tener en cuenta aun si es la opción 
-                // por defecto
+                // Se crea el registro en la tabla
                 $registro = DB::table($request->modulo)->insert(
                     [
                     'codigo' => $request->codigo,
@@ -140,9 +138,6 @@ class centrosTrabajoController extends Controller
                     ]
                 );
 
-                // $registros = DB::table($request->modulo)
-                //                     ->orderBy('codigo', 'asc')->get();
-                
                 $registros = DB::table($request->modulo)
                     ->leftJoin('niveles_riesgo', $request->modulo.'.nivel_riesgo_id', '=', 'niveles_riesgo.id')
                     ->where($request->modulo.'.activo',true)
@@ -170,6 +165,53 @@ class centrosTrabajoController extends Controller
         }
 
         return response()->json($registro);
+    }
+
+    // Modificación de registro Ajax
+    public function editarAjax(Request $request)
+    {
+        if($request->ajax()){      
+            
+            try{
+
+                DB::table($request->modulo)
+                    ->where('codigo', '=', $request->codigo)
+                    ->where('activo', true)
+                    ->update([
+                        'codigo' => $request->codigo,
+                        'nombre' => $request->nombre,
+                        'nivel_riesgo_id' => $request->nivel_riesgo_id                 
+                    ]);
+                
+                $registros = DB::table($request->modulo)
+                    ->leftJoin('niveles_riesgo', $request->modulo.'.nivel_riesgo_id', '=', 'niveles_riesgo.id')
+                    ->where($request->modulo.'.activo',true)
+                    ->select($request->modulo.'.*', 'niveles_riesgo.llave', 'niveles_riesgo.valor')
+                    ->get();
+
+            }catch(Exception $e){
+                dd($e);
+            }
+
+            return $registros;
+
+        }
+    }
+
+    // Eliminación de regsitro Ajax
+    public function eliminarAjax($modulo,$id)
+    {  
+        try{
+
+            DB::table($modulo)
+                ->where('id', '=', $id)
+                ->update([
+                    'activo' => false             
+            ]);
+
+        }catch(Exception $e){
+            dd($e);
+        }
     }
 
 }

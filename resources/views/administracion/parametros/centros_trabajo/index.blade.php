@@ -37,7 +37,7 @@
             <th>Código</th>
             <th>Nombre</th>
             <th>Nivel de riesgo</th>
-            <th>¿Activo?</th>
+            <!-- <th>¿Activo?</th> -->
             <th>Acción</th>
         </tr>
     </thead>
@@ -51,7 +51,7 @@
           @else
             <td></td>
           @endif
-          @if($centro_trabajo->activo)
+          <!-- @if($centro_trabajo->activo)
             <td>
               <span class="badge badge-success">Si</span>
             </td>
@@ -59,7 +59,7 @@
             <td>
               <span class="badge badge-danger">No</span>
             </td>
-          @endif
+          @endif -->
           <td>
             <button id="{{ $centro_trabajo->id }}" type="button" class="btn btn-outline-warning modificar" style="padding: 0px 3px" title="Modificar" data-toggle="tooltip">
               <i class="fas fa-pencil-alt"></i>

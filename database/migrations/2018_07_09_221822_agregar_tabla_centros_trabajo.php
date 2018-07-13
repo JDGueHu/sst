@@ -16,7 +16,7 @@ class AgregarTablaCentrosTrabajo extends Migration
         Schema::create('centros_trabajo', function (Blueprint $table) {
             $table->increments('id');
     
-            $table->string('codigo')->unique();
+            $table->string('codigo');
             $table->string('nombre');
 
             $table->integer('nivel_riesgo_id')->nullable()->unsigned();
