@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Empleado;
+use App\EstadoCivil;
 
-class empleadosController extends Controller
+class estadosCivilesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,9 @@ class empleadosController extends Controller
      */
     public function index()
     {
-        $empleados = Empleado::where('activo',true)->get();
-
-        return view('empleados.index')
-            ->with('empleados',$empleados);
+        $estados_civiles = EstadoCivil::orderBy('llave', 'asc')->get();
+        return view('administracion.listas_desplegables.estados_civiles.index')
+            ->with('estados_civiles',$estados_civiles);
     }
 
     /**
@@ -27,7 +26,7 @@ class empleadosController extends Controller
      */
     public function create()
     {
-        return view('empleados.create');
+        //
     }
 
     /**

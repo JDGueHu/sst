@@ -8,6 +8,12 @@ $(document).ready(function() {
             infoEmpty: "No hay registros disponibles",
             infoFiltered: "(Filtrado de _MAX_ registros totales)",
             sSearch: "Buscar",
+            buttons: {
+                pageLength: {
+                    _: "Mostrar %d registros",
+                    '-1': "Mostrar todo"
+                }
+            },
             paginate: {
             first:      "Primera",
             previous:   "Anterior",
@@ -100,6 +106,11 @@ $(document).ready(function() {
                 nombre_singular = "Nivel de riesgo ";
                 nombre_con_preposicion_mayuscula = "El nivel de riesgo ";    
                 nombre_con_preposicion_minuscula = "el nivel de riesgo ";             
+                break;
+            case 'estados_civiles':
+                nombre_singular = "Estado civil ";
+                nombre_con_preposicion_mayuscula = "El estado civil ";    
+                nombre_con_preposicion_minuscula = "el estado civil ";             
                 break;
         }
 

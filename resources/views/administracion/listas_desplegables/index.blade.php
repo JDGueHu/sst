@@ -40,6 +40,14 @@
                 </td>
             </tr>
             <tr>
+                <td>Estados civiles</td>
+                <td>
+                <a href="{{ route('estados_civiles.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                </td>
+            </tr>
+            <tr>
                 <td>Fondos de cesantias</td>
                 <td>
                 <a href="{{ route('fondos_cesantias.index') }}" class="btn btn-outline-primary" style="padding: 0px 3px" title="Configurar" data-toggle="tooltip">

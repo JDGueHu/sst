@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'],function(){
 
 	Route::resource('niveles_riesgo','nivelesRiesgoController');
 
-	Route::resource('cargos','nivelesRiesgoController');
+	Route::resource('estados_civiles','estadosCivilesController');
 
 	Route::resource('parametros','parametrosController');
 	Route::post('parametros/crearAjax',[

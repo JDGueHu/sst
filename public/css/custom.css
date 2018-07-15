@@ -114,6 +114,10 @@
     margin-bottom: 2%;
 }
 
+.separar_top{
+    margin-top: 2%;
+}
+
 div.dt-buttons{
     position: relative;
     float: left;

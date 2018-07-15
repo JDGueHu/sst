@@ -7,6 +7,12 @@ $(document).ready(function() {
             infoEmpty: "No hay registros disponibles",
             infoFiltered: "(Filtrado de _MAX_ registros totales)",
             sSearch: "Buscar",
+            buttons: {
+                pageLength: {
+                    _: "Mostrar %d registros",
+                    '-1': "Mostrar todo"
+                }
+            },
             paginate: {
             first:      "Primera",
             previous:   "Anterior",
