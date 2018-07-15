@@ -37,15 +37,15 @@ class AgregarTablaEmpleados extends Migration
             $table->integer('estado_civil_id')->unsigned();
             $table->foreign('estado_civil_id')->references('id')->on('estados_civiles');
 
-            $table->integer('numeroHijos')->nullable();
-            $table->string('ciudadDireccion');
-            $table->string('departamentoDireccion')->nullable();
-            $table->string('paisDireccion')->nullable();
+            $table->integer('numero_hijos')->nullable();
+            $table->string('ciudad_direccion');
+            $table->string('departamento_direccion')->nullable();
+            $table->string('pais_direccion')->nullable();
             $table->string('direccion');
-            $table->string('emailPersonal');
-            $table->string('telefonoFijo')->nullable();
-            $table->string('telefonoCelular');
-            $table->string('emailCorporativo')->nullable();
+            $table->string('email_personal');
+            $table->string('telefono_fijo')->nullable();
+            $table->string('telefono_celular');
+            $table->string('email_corporativo')->nullable();
 
             $table->integer('eps_id')->unsigned();
             $table->foreign('eps_id')->references('id')->on('eps');  

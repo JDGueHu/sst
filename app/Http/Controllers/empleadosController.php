@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Empleado;
+use App\TipoIdentificacion;
+use App\Genero;
 
 class empleadosController extends Controller
 {
@@ -18,6 +20,7 @@ class empleadosController extends Controller
 
         return view('empleados.index')
             ->with('empleados',$empleados);
+
     }
 
     /**
@@ -27,7 +30,26 @@ class empleadosController extends Controller
      */
     public function create()
     {
-        return view('empleados.create');
+
+        $tipos_identificacion = TipoIdentificacion::where('activo',true)->pluck('valor','id');
+        $tipo_identificacion_default = TipoIdentificacion::whereNotNull('valor_por_defecto')->first();
+        if($tipo_identificacion_default != null){$tipo_identificacion_default = $tipo_identificacion_default->id;}
+
+        $generos = Genero::where('activo',true)->pluck('valor','id');
+        $generos_default = Genero::whereNotNull('valor_por_defecto')->first();
+        if($generos_default != null){$generos_default = $generos_default->id;}
+
+        $grupos_sanguineos = TipoIdentificacion::where('activo',true)->pluck('valor','id');
+        $grupos_sanguineos_default = TipoIdentificacion::whereNotNull('valor_por_defecto')->first();
+        if($grupos_sanguineos_default != null){$grupos_sanguineos_default = $grupos_sanguineos_default->id;}
+
+        return view('empleados.create')
+            ->with('tipos_identificacion',$tipos_identificacion)
+            ->with('tipo_identificacion_default',$tipo_identificacion_default)
+            ->with('generos',$generos)
+            ->with('generos_default',$generos_default)
+            ->with('grupos_sanguineos',$grupos_sanguineos)
+            ->with('grupos_sanguineos_default',$grupos_sanguineos_default);
     }
 
     /**

@@ -118,6 +118,14 @@
     margin-top: 2%;
 }
 
+.separar_input_boton{
+    margin-bottom: 1%;
+}
+
+.separar_input_top{
+    margin-top: 1%;
+}
+
 div.dt-buttons{
     position: relative;
     float: left;
