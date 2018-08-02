@@ -151,11 +151,11 @@ div.dt-buttons{
 .validar_campo{
     display: none;
     color:red;
-    font-size: 75%;
 }
 
 .mostrar_error_input{
     display: block;
+    margin: 0px;
 }
 
 .borde_error{

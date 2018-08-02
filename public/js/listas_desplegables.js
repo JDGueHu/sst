@@ -482,5 +482,5 @@ $(document).ready(function() {
 
     });
 
-} );
+});
 

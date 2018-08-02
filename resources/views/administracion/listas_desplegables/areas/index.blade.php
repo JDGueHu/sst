@@ -16,7 +16,7 @@
     </div>
     <div class="col-md-3">
         {!! Form::text('valor',null, ['class' => 'form-control', 'id'=>'valor', 'placeholder'=>'Valor'])  !!}
-        {!! Form::label('llave', 'Ingrese un valor válido', ['class' => 'validar_campo','id'=>'error_valor']) !!}
+        {!! Form::label('valor', 'Ingrese un valor válido', ['class' => 'validar_campo','id'=>'error_valor']) !!}
     </div>
     <div class="col-md-3">
       <div class="form-check">
@@ -76,4 +76,5 @@
 
 @section('js')
   <script src="{{ asset('js/listas_desplegables.js') }}"></script>
+  <script src="{{ asset('js/compartido.js') }}"></script>
 @endsection
