@@ -37,7 +37,8 @@ class AgregarTablaEmpleados extends Migration
             $table->integer('estado_civil_id')->unsigned();
             $table->foreign('estado_civil_id')->references('id')->on('estados_civiles');
 
-            $table->integer('numero_hijos')->nullable();
+            $table->integer('numero_hijos')->nullable()->default(0);
+            $table->integer('foto')->nullable();
             $table->string('ciudad_direccion');
             $table->string('departamento_direccion')->nullable();
             $table->string('pais_direccion')->nullable();
@@ -67,6 +68,8 @@ class AgregarTablaEmpleados extends Migration
 
             $table->integer('centro_trabajo_id')->unsigned();
             $table->foreign('centro_trabajo_id')->references('id')->on('centros_trabajo'); 
+
+            $table->string('riesgo_total')->nullable();
             
             $table->string('estado');
 

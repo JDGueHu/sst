@@ -100,4 +100,28 @@ class cargosController extends Controller
     {
         //
     }
+
+    // Consultar registro Ajax
+    public function consultarAjax(Request $request, $cargo)
+    {
+
+        if($request->ajax()){ 
+
+            try{
+
+                $cargo= DB::table('cargos')
+                ->leftJoin('niveles_riesgo', 'cargos.nivel_riesgo_id', '=', 'niveles_riesgo.id')
+                ->where('cargos.id', '=', $cargo)
+                ->select('niveles_riesgo.llave','niveles_riesgo.valor')
+                ->get();
+
+            }catch(Exception $e){
+                dd($e);
+            }
+
+            return $cargo;
+
+        }
+    }
+
 }

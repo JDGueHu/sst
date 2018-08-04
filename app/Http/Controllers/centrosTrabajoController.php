@@ -101,4 +101,27 @@ class centrosTrabajoController extends Controller
         //
     }
 
+    // Consultar registro Ajax
+    public function consultarAjax(Request $request, $centro_trabajo_id)
+    {
+
+        if($request->ajax()){ 
+
+            try{
+
+                $centro_trabajo= DB::table('centros_trabajo')
+                ->leftJoin('niveles_riesgo', 'centros_trabajo.nivel_riesgo_id', '=', 'niveles_riesgo.id')
+                ->where('centros_trabajo.id', '=', $centro_trabajo_id)
+                ->select('niveles_riesgo.llave','niveles_riesgo.valor')
+                ->get();
+
+            }catch(Exception $e){
+                dd($e);
+            }
+
+            return $centro_trabajo;
+
+        }
+    }
+
 }

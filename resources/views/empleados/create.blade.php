@@ -9,7 +9,7 @@
 </ol>
 </nav>
 
-{!! Form::open(['route' => 'empleados.store', 'method' => 'POST', 'id' => 'example_form']) !!}
+{!! Form::open(['route' => 'empleados.store', 'method' => 'POST', 'id' => 'example_form', 'enctype' => 'multipart/form-data']) !!}
 
 <!-- {!! Form::submit('Guardar',['class' => 'btn btn-primary separar_boton '])  !!} -->
 <a style="text-decoration: none;">
@@ -127,7 +127,7 @@
     <div class="row">
         <div class="col-md-3 separar_input_top">
             {!! Form::label('ciudad_nacimiento','Ciudad de nacimiento')  !!}
-            {!! Form::text('ciudad_nacimiento',null, ['class' => 'form-control', 'id'=>'ciudad_nacimiento'])  !!}
+            {!! Form::text('ciudad_nacimiento',null, ['class' => 'form-control', 'id'=>'ciudad_nacimiento', 'onFocus'=>'geolocate()'])  !!}
         
             {!! Form::label('ciudad_nacimiento', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_ciudad_nacimiento']) !!}
             @if ($errors->has('ciudad_nacimiento'))
@@ -161,7 +161,11 @@
         <div class="col-md-3 separar_input_top">
             {!! Form::label('numero_hijos','Número de hijos')  !!}
             {!! Form::number('numero_hijos',0, ['class' => 'form-control', 'id'=>'numero_hijos'])  !!}
-        </div>  
+        </div>
+        <div class="col-md-3 separar_input_top">
+            {!! Form::label('foto','Foto')  !!}
+            {!! Form::file('foto', ['class' => 'form-control', 'id'=>'foto'])  !!}
+        </div>   
     </div>
 
   </div>
@@ -171,7 +175,7 @@
     <div class="row">
         <div class="col-md-3 separar_input_top">
             {!! Form::label('ciudad_direccion','Ciudad')  !!}
-            {!! Form::text('ciudad_direccion',null, ['class' => 'form-control', 'required', 'id'=>'ciudad_direccion'])  !!}
+            {!! Form::text('ciudad_direccion',null, ['class' => 'form-control', 'required', 'id'=>'ciudad_direccion', 'onFocus'=>'geolocate()'])  !!}
         
             {!! Form::label('ciudad_direccion', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_ciudad_direccion']) !!}
             @if ($errors->has('ciudad_direccion'))
@@ -191,6 +195,13 @@
         <div class="col-md-3 separar_input_top">
             {!! Form::label('direccion','Dirección')  !!}
             {!! Form::text('direccion',null, ['class' => 'form-control', 'required', 'id'=>'direccion'])  !!}
+        
+            {!! Form::label('direccion', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_direccion']) !!}
+            @if ($errors->has('direccion'))
+                <span style="color: red" class="help-block">
+                    <span>{{ $errors->first('direccion') }}</span>
+                </span>
+            @endif
         </div>
     </div>
 
@@ -198,6 +209,13 @@
         <div class="col-md-3 separar_input_top">
             {!! Form::label('email_personal','Correo electrónico personal')  !!}
             {!! Form::email('email_personal',null, ['class' => 'form-control', 'required', 'id'=>'email_personal'])  !!}
+        
+            {!! Form::label('email_personal', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_email_personal']) !!}
+            @if ($errors->has('email_personal'))
+                <span style="color: red" class="help-block">
+                    <span>{{ $errors->first('email_personal') }}</span>
+                </span>
+            @endif
         </div>
         <div class="col-md-3 separar_input_top">
             {!! Form::label('telefono_fijo','Teléfono fijo')  !!}
@@ -206,6 +224,13 @@
         <div class="col-md-3 separar_input_top">
             {!! Form::label('telefono_celular','Celular')  !!}
             {!! Form::text('telefono_celular',null, ['class' => 'form-control', 'id'=>'telefono_celular'])  !!}
+        
+            {!! Form::label('telefono_celular', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_telefono_celular']) !!}
+            @if ($errors->has('telefono_celular'))
+                <span style="color: red" class="help-block">
+                    <span>{{ $errors->first('telefono_celular') }}</span>
+                </span>
+            @endif
         </div>  
     </div>
 
@@ -215,61 +240,116 @@
     
     <div class="row">
         <div class="col-md-3 separar_input_top">
-            {!! Form::label('antiguedad','Antigüedad (días)')  !!}
-            {!! Form::text('antiguedad',null, ['class' => 'form-control', 'id'=>'antiguedad','readonly'])  !!}
-        </div> 
-        <div class="col-md-3 separar_input_top">
             {!! Form::label('email_corporativo','Email corporativo')  !!}
             {!! Form::email('email_corporativo',null, ['class' => 'form-control', 'id'=>'email_corporativo'])  !!}
         </div>  
         <div class="col-md-3 separar_input_top">
             {!! Form::label('eps_id','EPS')  !!}
             {!! Form::select('eps_id', $eps, $eps_default, ['class' => 'form-control', 'required', 'placeholder' => 'Seleccione una EPS','id'=>'eps_id'])  !!} 
+        
+            {!! Form::label('eps_id', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_eps_id']) !!}
+            @if ($errors->has('eps_id'))
+                <span style="color: red" class="help-block">
+                    <span>{{ $errors->first('eps_id') }}</span>
+                </span>
+            @endif
         </div>   
         <div class="col-md-3 separar_input_top">
             {!! Form::label('arl_id','ARL')  !!}
             {!! Form::select('arl_id', $arl, $arl_default, ['class' => 'form-control', 'required', 'placeholder' => 'Seleccione una ARL','id'=>'arl_id'])  !!} 
+        
+            {!! Form::label('arl_id', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_arl_id']) !!}
+            @if ($errors->has('arl_id'))
+                <span style="color: red" class="help-block">
+                    <span>{{ $errors->first('arl_id') }}</span>
+                </span>
+            @endif
         </div>  
+        <div class="col-md-3 separar_input_top">
+            {!! Form::label('fondo_cesantias_id','Fondo de cesantías')  !!}
+            {!! Form::select('fondo_cesantias_id', $fondos_cesantias, $fondos_cesantias_default, ['class' => 'form-control', 'required', 'placeholder' => 'Seleccione un fondo','id'=>'fondo_cesantias_id'])  !!} 
+        
+            {!! Form::label('fondo_cesantias_id', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_fondo_cesantias_id']) !!}
+            @if ($errors->has('fondo_cesantias_id'))
+                <span style="color: red" class="help-block">
+                    <span>{{ $errors->first('fondo_cesantias_id') }}</span>
+                </span>
+            @endif
+        </div> 
     </div>
 
     <div class="row">
         <div class="col-md-3 separar_input_top">
-            {!! Form::label('fondo_cesantias_id','Fondo de cesantías')  !!}
-            {!! Form::select('fondo_cesantias_id', $fondos_cesantias, $fondos_cesantias_default, ['class' => 'form-control', 'required', 'placeholder' => 'Seleccione un fondo','id'=>'fondo_cesantias_id'])  !!} 
-        </div> 
-        <div class="col-md-3 separar_input_top">
             {!! Form::label('fondo_pensiones_id','Fondo de pensiones')  !!}
             {!! Form::select('fondo_pensiones_id', $fondos_pensiones, $fondos_pensiones_default, ['class' => 'form-control', 'required', 'placeholder' => 'Seleccione un fondo','id'=>'fondo_pensiones_id'])  !!} 
+        
+            {!! Form::label('fondo_pensiones_id', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_fondo_pensiones_id']) !!}
+            @if ($errors->has('fondo_pensiones_id'))
+                <span style="color: red" class="help-block">
+                    <span>{{ $errors->first('fondo_pensiones_id') }}</span>
+                </span>
+            @endif
         </div>
         <div class="col-md-3 separar_input_top">
             {!! Form::label('area_id','Área')  !!}
             {!! Form::select('area_id', $areas, $areas_default, ['class' => 'form-control', 'required', 'placeholder' => 'Seleccione un área','id'=>'area_id'])  !!} 
+        
+            {!! Form::label('area_id', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_area_id']) !!}
+            @if ($errors->has('area_id'))
+                <span style="color: red" class="help-block">
+                    <span>{{ $errors->first('area_id') }}</span>
+                </span>
+            @endif
         </div> 
         <div class="col-md-3 separar_input_top">
             {!! Form::label('centro_trabajo_id','Centro de trabajo')  !!}
             {!! Form::select('centro_trabajo_id', $centros_trabajo, null, ['class' => 'form-control', 'required', 'placeholder' => 'Seleccione centro trabajo','id'=>'centro_trabajo_id'])  !!} 
+        
+            {!! Form::label('centro_trabajo_id', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_centro_trabajo_id']) !!}
+            @if ($errors->has('centro_trabajo_id'))
+                <span style="color: red" class="help-block">
+                    <span>{{ $errors->first('centro_trabajo_id') }}</span>
+                </span>
+            @endif
+        </div> 
+        <div class="col-md-3 separar_input_top">
+            {!! Form::label('nombre_riesgo_centro_trabajo','Nivel de riesgo (Centro de trabajo)')  !!}
+            {!! Form::text('nombre_riesgo_centro_trabajo',null, ['class' => 'form-control', 'id'=>'nombre_riesgo_centro_trabajo','readonly'])  !!}
         </div> 
     </div>
 
     <div class="row">
         <div class="col-md-3 separar_input_top">
-            {!! Form::label('riesgo_centro_trabajo','Nivel de riesgo (Centro de trabajo)')  !!}
+            {!! Form::label('riesgo_centro_trabajo','Valor del riesgo (Centro de trabajo)')  !!}
             {!! Form::text('riesgo_centro_trabajo',null, ['class' => 'form-control', 'id'=>'riesgo_centro_trabajo','readonly'])  !!}
-        </div> 
+        </div>
         <div class="col-md-3 separar_input_top">
             {!! Form::label('cargo_id','Cargo')  !!}
             {!! Form::select('cargo_id', $cargos, null, ['class' => 'form-control', 'required', 'placeholder' => 'Seleccione un cargo','id'=>'cargo_id'])  !!} 
+        
+            {!! Form::label('cargo_id', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_cargo_id']) !!}
+            @if ($errors->has('cargo_id'))
+                <span style="color: red" class="help-block">
+                    <span>{{ $errors->first('cargo_id') }}</span>
+                </span>
+            @endif
         </div>
         <div class="col-md-3 separar_input_top">
-            {!! Form::label('riesgo_cargo','Nivel de riesgo (Cargo)')  !!}
+            {!! Form::label('nombre_riesgo_cargo','Nivel de riesgo (Cargo)')  !!}
+            {!! Form::text('nombre_riesgo_cargo',null, ['class' => 'form-control', 'id'=>'nombre_riesgo_cargo','readonly'])  !!}
+        </div>
+        <div class="col-md-3 separar_input_top">
+            {!! Form::label('riesgo_cargo','Valor del riesgo (Cargo)')  !!}
             {!! Form::text('riesgo_cargo',null, ['class' => 'form-control', 'id'=>'riesgo_cargo','readonly'])  !!}
-        </div>
-        <div class="col-md-3 separar_input_top">
-            {!! Form::label('riesgo_total','Riesgo total')  !!}
-            {!! Form::text('riesgo_total',null, ['class' => 'form-control', 'id'=>'riesgo_total','readonly'])  !!}
         </div> 
     </div>
 
+    <div class="row">
+        <div class="col-md-3 separar_input_top">
+            {!! Form::label('riesgo_total','Riesgo total')  !!}
+            {!! Form::text('riesgo_total',null, ['class' => 'form-control', 'id'=>'riesgo_total','readonly'])  !!}
+        </div>
+    </div>
 
   </div>
 
@@ -277,10 +357,10 @@
 
 <!-- {!! Form::submit('Guardar',['class' => 'btn btn-primary separar_top '])  !!} -->
 <a style="text-decoration: none;">
-    {!! Form::button('Guardar',['class' => 'btn btn-primary separar_top guardar'])  !!}
+    {!! Form::button('Guardar',['class' => 'btn btn-primary separar_top separar_boton guardar'])  !!}
 </a>
 <a style="text-decoration: none;" href="{{ route('empleados.index') }}">
-    {!! Form::button('Regresar',['class' => 'btn btn-default separar_top '])  !!}
+    {!! Form::button('Regresar',['class' => 'btn btn-default separar_top separar_boton'])  !!}
 </a>
 
 {!! Form::close() !!}
@@ -291,15 +371,19 @@
     <script src="{{ asset('js/compartido.js') }}"></script>
     <script src="{{ asset('js/empleados/compartido.js') }}"></script>
     <script src="{{ asset('js/empleados/create.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMeUNAUOMCxF32rNqvTs7p9rV9DXFiiaw&libraries=places&callback=initAutocomplete"
+        async defer></script>
 
     <script>
+        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
         $('.fecha').datepicker({
             uiLibrary: 'bootstrap4',
             icons: {
                 rightIcon: '<i class="far fa-calendar-alt"></i>'
             },
             locale: 'es-es',
-            header: true
+            header: true,
+            maxDate: today
         });
     </script>
 

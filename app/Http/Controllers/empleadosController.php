@@ -132,12 +132,8 @@ class empleadosController extends Controller
             'grupo_sanguineo_id' => 'required',
             'fecha_nacimiento' => 'required',
             'ciudad_nacimiento' => 'required',
-            'departamento_nacimiento' => 'required',
-            'pais_nacimiento' => 'required',
             'estado_civil_id' => 'required',
             'ciudad_direccion' => 'required',
-            'departamento_direccion' => 'required',
-            'pais_direccion' => 'required',
             'direccion' => 'required|max:200',
             'email_personal' => 'required|email',
             'telefono_celular' => 'required|string',
@@ -145,10 +141,9 @@ class empleadosController extends Controller
             'arl_id' => 'required',
             'fondo_cesantias_id' => 'required',
             'fondo_pensiones_id' => 'required',
-            'cargo_id' => 'required',
             'area_id' => 'required',
             'centro_trabajo_id' => 'required',
-            'estado' => 'required|string',
+            'cargo_id' => 'required'
         ]);
     }
 
@@ -164,6 +159,9 @@ class empleadosController extends Controller
             $this->validator($request->all())->validate();
 
             $empleado = new Empleado();
+
+            flash('El Colaborador <b></b> se creó exitosamente', 'success')->important();
+            return redirect()->route('empleados.index');
         }
         catch(Exception $e){
             dd($e);

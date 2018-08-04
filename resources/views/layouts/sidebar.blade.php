@@ -45,7 +45,7 @@
             <i class="fas fa-users" style="color:#ff5722;"></i>
           </div>
           <div class="col-8 color_opcion_menu">
-            Empleados
+            Colaboradores
           </div>
           <div class="col-2">
           </div>        

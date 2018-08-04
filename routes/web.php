@@ -86,8 +86,17 @@ Route::group(['middleware' => 'auth'],function(){
 	]);
 
 	Route::resource('centros_trabajo','centrosTrabajoController');
+	Route::get('centros_trabajo/{centro_trabajo_id}/consultarAjax',[
+		'uses' => 'centrosTrabajoController@consultarAjax',
+		'as' => 'centros_trabajo.consultarAjax'
+	]);
 
 	Route::resource('cargos','cargosController');
+	Route::get('cargos/{cargo_id}/consultarAjax',[
+		'uses' => 'cargosController@consultarAjax',
+		'as' => 'cargos.consultarAjax'
+	]);
+
 
 	Route::resource('empleados','empleadosController');
 
