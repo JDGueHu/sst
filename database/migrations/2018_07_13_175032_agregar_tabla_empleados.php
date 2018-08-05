@@ -29,7 +29,7 @@ class AgregarTablaEmpleados extends Migration
             $table->integer('grupo_sanguineo_id')->unsigned();
             $table->foreign('grupo_sanguineo_id')->references('id')->on('grupos_sanguineos');
         
-            $table->date('fecha_nacimiento');
+            $table->string('fecha_nacimiento');
             $table->string('ciudad_nacimiento');
             $table->string('departamento_nacimiento')->nullable();
             $table->string('pais_nacimiento')->nullable();
@@ -38,7 +38,7 @@ class AgregarTablaEmpleados extends Migration
             $table->foreign('estado_civil_id')->references('id')->on('estados_civiles');
 
             $table->integer('numero_hijos')->nullable()->default(0);
-            $table->integer('foto')->nullable();
+            $table->string('foto')->nullable();
             $table->string('ciudad_direccion');
             $table->string('departamento_direccion')->nullable();
             $table->string('pais_direccion')->nullable();
@@ -71,7 +71,7 @@ class AgregarTablaEmpleados extends Migration
 
             $table->string('riesgo_total')->nullable();
             
-            $table->string('estado');
+            $table->string('estado')->default('Activo');
 
             $table->boolean('activo')->default(true);
             

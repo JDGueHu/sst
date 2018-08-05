@@ -9,9 +9,9 @@
 </ol>
 </nav>
 
-{!! Form::open(['route' => 'empleados.store', 'method' => 'POST', 'id' => 'example_form', 'enctype' => 'multipart/form-data']) !!}
+{!! Form::open(['route' => 'empleados.store', 'method' => 'POST', 'id' => 'example_form', 'files' => true]) !!}
 
-<!-- {!! Form::submit('Guardar',['class' => 'btn btn-primary separar_boton '])  !!} -->
+<!-- 'enctype' => 'multipart/form-data'-->
 <a style="text-decoration: none;">
     {!! Form::button('Guardar',['class' => 'btn btn-primary separar_boton guardar'])  !!}
 </a>
@@ -174,7 +174,7 @@
   
     <div class="row">
         <div class="col-md-3 separar_input_top">
-            {!! Form::label('ciudad_direccion','Ciudad')  !!}
+            {!! Form::label('ciudad_direccion','Ciudad de residencia')  !!}
             {!! Form::text('ciudad_direccion',null, ['class' => 'form-control', 'required', 'id'=>'ciudad_direccion', 'onFocus'=>'geolocate()'])  !!}
         
             {!! Form::label('ciudad_direccion', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_ciudad_direccion']) !!}
@@ -185,15 +185,15 @@
             @endif
         </div>
         <div class="col-md-3 separar_input_top">
-            {!! Form::label('departamento_direccion','Departamento')  !!}
+            {!! Form::label('departamento_direccion','Departamento de residencia')  !!}
             {!! Form::text('departamento_direccion',null, ['class' => 'form-control', 'id'=>'departamento_direccion','readonly'])  !!}
         </div>    
         <div class="col-md-3 separar_input_top">
-            {!! Form::label('pais_direccion','Pais')  !!}
+            {!! Form::label('pais_direccion','Pais de residencia')  !!}
             {!! Form::text('pais_direccion',null, ['class' => 'form-control', 'id'=>'pais_direccion','readonly'])  !!}
         </div>  
         <div class="col-md-3 separar_input_top">
-            {!! Form::label('direccion','Dirección')  !!}
+            {!! Form::label('direccion','Dirección de residencia')  !!}
             {!! Form::text('direccion',null, ['class' => 'form-control', 'required', 'id'=>'direccion'])  !!}
         
             {!! Form::label('direccion', 'Campo requerido', ['class' => 'validar_campo','id'=>'error_direccion']) !!}
@@ -242,6 +242,12 @@
         <div class="col-md-3 separar_input_top">
             {!! Form::label('email_corporativo','Email corporativo')  !!}
             {!! Form::email('email_corporativo',null, ['class' => 'form-control', 'id'=>'email_corporativo'])  !!}
+       
+            @if ($errors->has('email_corporativo'))
+                <span style="color: red" class="help-block">
+                    <span>{{ $errors->first('email_corporativo') }}</span>
+                </span>
+            @endif
         </div>  
         <div class="col-md-3 separar_input_top">
             {!! Form::label('eps_id','EPS')  !!}

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 use App\Empleado;
 use App\TipoIdentificacion;
@@ -130,6 +132,7 @@ class empleadosController extends Controller
             'apellidos' => 'required|string|max:100',
             'genero_id' => 'required',
             'grupo_sanguineo_id' => 'required',
+            'foto'=>'image',
             'fecha_nacimiento' => 'required',
             'ciudad_nacimiento' => 'required',
             'estado_civil_id' => 'required',
@@ -137,6 +140,7 @@ class empleadosController extends Controller
             'direccion' => 'required|max:200',
             'email_personal' => 'required|email',
             'telefono_celular' => 'required|string',
+            'email_corporativo' => 'email',
             'eps_id' => 'required',
             'arl_id' => 'required',
             'fondo_cesantias_id' => 'required',
@@ -160,7 +164,50 @@ class empleadosController extends Controller
 
             $empleado = new Empleado();
 
-            flash('El Colaborador <b></b> se creó exitosamente', 'success')->important();
+            //dd($request);
+
+            // Pestaña 1
+            $empleado->tipo_identificacion_id = $request->tipo_identificacion_id;
+            $empleado->identificacion = $request->identificacion;
+            $empleado->nombres = $request->nombres;
+            $empleado->apellidos = $request->apellidos;
+            $empleado->genero_id = $request->genero_id;
+            $empleado->grupo_sanguineo_id = $request->grupo_sanguineo_id;
+            $empleado->fecha_nacimiento = $request->fecha_nacimiento;
+            $empleado->ciudad_nacimiento = $request->ciudad_nacimiento;
+            $empleado->departamento_nacimiento = $request->departamento_nacimiento;
+            $empleado->pais_nacimiento = $request->pais_nacimiento;
+            $empleado->estado_civil_id = $request->estado_civil_id;
+            $empleado->numero_hijos = $request->numero_hijos;
+
+            if($request->file('foto')){
+                $path = Storage::disk('public')->putFile('img', $request->file('foto'));
+                $empleado->foto = asset($path);
+            }
+            
+            // Pestaña 2
+            $empleado->ciudad_direccion = $request->ciudad_direccion;
+            $empleado->departamento_direccion = $request->departamento_direccion;
+            $empleado->pais_direccion = $request->pais_direccion;
+            $empleado->direccion = $request->direccion;
+            $empleado->email_personal = $request->email_personal;
+            $empleado->telefono_fijo = $request->telefono_fijo;
+            $empleado->telefono_celular = $request->telefono_celular;
+
+            // Pestaña 3
+            $empleado->email_corporativo = $request->email_corporativo;
+            $empleado->eps_id = $request->eps_id;
+            $empleado->arl_id = $request->arl_id;
+            $empleado->fondo_cesantias_id = $request->fondo_cesantias_id;
+            $empleado->fondo_pensiones_id = $request->fondo_pensiones_id;
+            $empleado->cargo_id = $request->cargo_id;
+            $empleado->area_id = $request->area_id;
+            $empleado->centro_trabajo_id = $request->centro_trabajo_id;
+            $empleado->riesgo_total = $request->riesgo_total;
+
+            $empleado->save();
+
+            flash('El Colaborador <b>'.$empleado->nombres.' '.$empleado->apellidos.'</b> se creó exitosamente', 'success')->important();
             return redirect()->route('empleados.index');
         }
         catch(Exception $e){
