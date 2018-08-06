@@ -118,6 +118,10 @@
     margin-top: 2%;
 }
 
+.centrar{
+    text-align: center;
+}
+
 .separar_input_boton{
     margin-bottom: 1%;
 }

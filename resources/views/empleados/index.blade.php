@@ -13,6 +13,7 @@
 <table id="example" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
+            <th>Foto</th>
             <th>Identificación</th>
             <th>Nombres</th>
             <th>Apellidos</th>
@@ -23,6 +24,7 @@
     <tbody>
         @foreach($empleados as $empleado)
         <tr>
+          <td class="centrar"><img src="{{ $empleado->foto }}" height="42" width="42"></td>
           <td>{{ $empleado->identificacion }}</td>
           <td>{{ $empleado->nombres }}</td>
           <td>{{ $empleado->apellidos }}</td> 

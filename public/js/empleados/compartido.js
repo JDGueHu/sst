@@ -1,19 +1,17 @@
 $(document).ready(function() {    
 
-    //// Restringir la seleccion de fecha hasta la fecha actual en Empleados ////
-	// var today = new Date();
-	// var dd = today.getDate();
-	// var mm = today.getMonth()+1; //January is 0!
-	// var yyyy = today.getFullYear();
-	//  if(dd<10){
-	//         dd='0'+dd
-	//     } 
-	//     if(mm<10){
-	//         mm='0'+mm
-	//     } 
+    //// Calcular edad para vistas Show y Edit
+    var hoy = new Date();
+    var cumpleanos = new Date($("#fecha_nacimiento").val());
+    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    var mes = hoy.getMonth() - cumpleanos.getMonth();
 
-    // today = dd+'/'+mm+'/'+yyyy;
-    // $('#fecha_nacimiento').val(today)
+    if (mes < 0 || (mes  === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+
+    $("#edad").text(edad);
+    $("#edad").val(edad);
 	
 
     //////////////////////////////////////////////////////////////////////
