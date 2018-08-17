@@ -39,6 +39,7 @@ class AgregarTablaEmpleados extends Migration
 
             $table->integer('numero_hijos')->nullable()->default(0);
             $table->string('foto')->nullable();
+            $table->string('url_foto')->nullable();
             $table->string('ciudad_direccion');
             $table->string('departamento_direccion')->nullable();
             $table->string('pais_direccion')->nullable();

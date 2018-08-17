@@ -123,11 +123,11 @@ class empleadosController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data, $empleado=NULl)
     {
         return Validator::make($data, [
             'tipo_identificacion_id' => 'required',
-            'identificacion' => 'required|unique:empleados',
+            'identificacion' => 'required|unique:empleados,identificacion,'.$empleado->identificacion,
             'nombres' => 'required|string|max:100',
             'apellidos' => 'required|string|max:100',
             'genero_id' => 'required',
@@ -164,8 +164,6 @@ class empleadosController extends Controller
 
             $empleado = new Empleado();
 
-            //dd($request);
-
             // Pestaña 1
             $empleado->tipo_identificacion_id = $request->tipo_identificacion_id;
             $empleado->identificacion = $request->identificacion;
@@ -182,7 +180,8 @@ class empleadosController extends Controller
 
             if($request->file('foto')){
                 $path = Storage::disk('public')->putFile('img', $request->file('foto'));
-                $empleado->foto = asset($path);
+                $empleado->foto = $request->file('foto')->getClientOriginalName();
+                $empleado->url_foto = asset($path);
             }
             
             // Pestaña 2
@@ -237,7 +236,69 @@ class empleadosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $empleado = Empleado::find($id);
+
+        //Tipos de identificación
+        $tipos_identificacion = TipoIdentificacion::where('activo',true)->pluck('valor','id');
+
+        //Géneros
+        $generos = Genero::where('activo',true)->pluck('valor','id');
+
+        //Grupos sangúineos
+        $grupos_sanguineos = GrupoSanguineo::where('activo',true)->pluck('valor','id');
+
+        //Estados civiles
+        $estados_civiles = EstadoCivil::where('activo',true)->pluck('valor','id');
+
+        //EPS
+        $eps = EPS::where('activo',true)->pluck('valor','id');
+        $eps_default = EPS::whereNotNull('valor_por_defecto')->first();
+        if($eps_default != null){$eps_default = $eps_default->id;}
+
+        //ARL
+        $arl = ARL::where('activo',true)->pluck('valor','id');
+        $arl_default = ARL::whereNotNull('valor_por_defecto')->first();
+        if($arl_default != null){$arl_default = $arl_default->id;}
+
+        //Fondo de cesantías
+        $fondos_cesantias = FondosCesantias::where('activo',true)->pluck('valor','id');
+        $fondos_cesantias_default = FondosCesantias::whereNotNull('valor_por_defecto')->first();
+        if($fondos_cesantias_default != null){$fondos_cesantias_default = $fondos_cesantias_default->id;}
+
+        //Fondo de pensiones
+        $fondos_pensiones = FondosCesantias::where('activo',true)->pluck('valor','id');
+        $fondos_pensiones_default = FondosCesantias::whereNotNull('valor_por_defecto')->first();
+        if($fondos_pensiones_default != null){$fondos_pensiones_default = $fondos_pensiones_default->id;}
+
+        //Áreas
+        $areas = Area::where('activo',true)->pluck('valor','id');
+        $areas_default = Area::whereNotNull('valor_por_defecto')->first();
+        if($areas_default != null){$areas_default = $areas_default->id;}
+
+        //Centros de trabajo
+        $centros_trabajo = CentroTrabajo::where('activo',true)->pluck('nombre','id');        
+
+        //Cargos
+        $cargos = Cargo::where('activo',true)->pluck('nombre','id'); 
+
+        return view('empleados.edit')
+            ->with('empleado',$empleado)
+            ->with('tipos_identificacion',$tipos_identificacion)
+            ->with('generos',$generos)
+            ->with('grupos_sanguineos',$grupos_sanguineos)
+            ->with('estados_civiles',$estados_civiles)
+            ->with('eps',$eps)
+            ->with('eps_default',$eps_default)
+            ->with('arl',$arl)
+            ->with('arl_default',$arl_default)
+            ->with('fondos_cesantias',$fondos_cesantias)
+            ->with('fondos_cesantias_default',$fondos_cesantias_default)
+            ->with('fondos_pensiones',$fondos_pensiones)
+            ->with('fondos_pensiones_default',$fondos_pensiones_default)
+            ->with('areas',$areas)
+            ->with('areas_default',$areas_default)
+            ->with('cargos',$cargos)
+            ->with('centros_trabajo',$centros_trabajo);
     }
 
     /**
@@ -249,7 +310,60 @@ class empleadosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $empleado = Empleado::find($id);
+
+            $this->validator($request->all(), $empleado)->validate();
+
+            // Pestaña 1
+            $empleado->tipo_identificacion_id = $request->tipo_identificacion_id;
+            $empleado->identificacion = $request->identificacion;
+            $empleado->nombres = $request->nombres;
+            $empleado->apellidos = $request->apellidos;
+            $empleado->genero_id = $request->genero_id;
+            $empleado->grupo_sanguineo_id = $request->grupo_sanguineo_id;
+            $empleado->fecha_nacimiento = $request->fecha_nacimiento;
+            $empleado->ciudad_nacimiento = $request->ciudad_nacimiento;
+            $empleado->departamento_nacimiento = $request->departamento_nacimiento;
+            $empleado->pais_nacimiento = $request->pais_nacimiento;
+            $empleado->estado_civil_id = $request->estado_civil_id;
+            $empleado->numero_hijos = $request->numero_hijos;
+
+            if($request->file('foto')){
+                Storage::delete($empleado->foto);
+                $path = Storage::disk('public')->putFile('img', $request->file('foto'));
+                $empleado->foto = $request->file('foto')->getClientOriginalName();
+                $empleado->url_foto = asset($path);
+            }
+            
+            // Pestaña 2
+            $empleado->ciudad_direccion = $request->ciudad_direccion;
+            $empleado->departamento_direccion = $request->departamento_direccion;
+            $empleado->pais_direccion = $request->pais_direccion;
+            $empleado->direccion = $request->direccion;
+            $empleado->email_personal = $request->email_personal;
+            $empleado->telefono_fijo = $request->telefono_fijo;
+            $empleado->telefono_celular = $request->telefono_celular;
+
+            // Pestaña 3
+            $empleado->email_corporativo = $request->email_corporativo;
+            $empleado->eps_id = $request->eps_id;
+            $empleado->arl_id = $request->arl_id;
+            $empleado->fondo_cesantias_id = $request->fondo_cesantias_id;
+            $empleado->fondo_pensiones_id = $request->fondo_pensiones_id;
+            $empleado->cargo_id = $request->cargo_id;
+            $empleado->area_id = $request->area_id;
+            $empleado->centro_trabajo_id = $request->centro_trabajo_id;
+            $empleado->riesgo_total = $request->riesgo_total;
+
+            $empleado->save();
+
+            flash('El Colaborador <b>'.$empleado->nombres.' '.$empleado->apellidos.'</b> se modificó exitosamente', 'warning')->important();
+            return redirect()->route('empleados.index');
+        }
+        catch(Exception $e){
+            dd($e);
+        }
     }
 
     /**

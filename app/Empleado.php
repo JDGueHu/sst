@@ -28,4 +28,39 @@ class Empleado extends Model
     {
         return $this->belongsTo('App\EstadoCivil','estado_civil_id');
     }
+
+    public function eps()
+    {
+        return $this->belongsTo('App\EPS','eps_id');
+    }
+
+    public function arl()
+    {
+        return $this->belongsTo('App\ARL','arl_id');
+    }
+
+    public function fondoCesantias()
+    {
+        return $this->belongsTo('App\FondosCesantias','fondo_cesantias_id');
+    }
+
+    public function fondoPensiones()
+    {
+        return $this->belongsTo('App\FondosCesantias','fondo_pensiones_id');
+    }
+
+    public function cargo()
+    {
+        return $this->belongsTo('App\Cargo','cargo_id');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo('App\Area','area_id');
+    }
+
+    public function centroTrabajo()
+    {
+        return $this->belongsTo('App\CentroTrabajo','centro_trabajo_id');
+    }
 }

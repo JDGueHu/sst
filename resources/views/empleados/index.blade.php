@@ -17,6 +17,7 @@
             <th>Identificación</th>
             <th>Nombres</th>
             <th>Apellidos</th>
+            <th>Riesgo total</th>
             <th>Estado</th>
             <th>Acción</th>
         </tr>
@@ -24,10 +25,11 @@
     <tbody>
         @foreach($empleados as $empleado)
         <tr>
-          <td class="centrar"><img src="{{ $empleado->foto }}" height="42" width="42"></td>
+          <td class="centrar"><img src="{{ $empleado->url_foto }}" height="42" width="42"></td>
           <td>{{ $empleado->identificacion }}</td>
           <td>{{ $empleado->nombres }}</td>
           <td>{{ $empleado->apellidos }}</td> 
+          <td>{{ $empleado->riesgo_total }}</td> 
           @if($empleado->activo == 1)
             <td>              
               <span class="badge badge-success">Activo</span>
@@ -41,7 +43,7 @@
             <a title="Detalles" data-toggle="tooltip" href="{{ route('empleados.show',$empleado->id) }}" style="padding: 0px 3px" class="btn btn-outline-primary">
                 <i class="fa fa-eye" aria-hidden="true"></i>
             </a>
-            <a title="Editar" data-toggle="tooltip" href="{{ route('empleados.show',$empleado->id) }}" style="padding: 0px 3px" class="btn btn-outline-warning">
+            <a title="Editar" data-toggle="tooltip" href="{{ route('empleados.edit',$empleado->id) }}" style="padding: 0px 3px" class="btn btn-outline-warning">
                 <i class="fas fa-pencil-alt"></i>
             </a>
             <a title="Activar" data-toggle="tooltip" href="{{ route('empleados.show',$empleado->id) }}" style="padding: 0px 3px" class="btn btn-outline-success">
